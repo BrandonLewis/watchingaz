@@ -1,0 +1,10 @@
+data
+cache
+*.pyc
+*.DS_Store
+*~
+local_settings.py
+errors/*
+*.pid
+*.swp
+.idea
