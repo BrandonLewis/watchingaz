@@ -1,0 +1,1 @@
+{# context: activation_key, expiriation_days, site #}

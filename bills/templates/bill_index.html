@@ -1,0 +1,210 @@
+{% extends 'site.html' %}
+{% load humanize %}
+{% block additional_style %}
+    <style>
+        .inner_content {
+            background: rgb(250, 250, 250);
+            background: rgba(250, 250, 250, .7);
+            background-image: -moz-linear-gradient(top, rgba(250, 250, 250, .8), rgba(229, 229, 229, .7)); /*Firefox*/
+            background-image: -webkit-gradient(linear, center top, center bottom, from(rgba(250, 250, 250, .8)), to(rgba(229, 229, 229, .7))); /*Safari/Chrome*/
+            -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#FFFFFF,EndColorStr=#fbfbfb)"; /*IE8*/
+            background-image: linear-gradient(top, #FFFFFF, #fbfbfb); /*Standard*/
+        }
+
+        .inner-container {
+            margin: 0 10px;
+            padding: 0;
+            border: 1px solid rgb(10, 10, 10);
+        }
+
+        .content {
+            background: rgb(250, 250, 250);
+            border-left: 1px solid rgb(10, 10, 10);
+            padding: 10px;
+        }
+
+        .scrollview-header {
+            background: rgb(229, 229, 229);
+            background: rgba(229, 229, 229, .7);
+            background-image: -moz-linear-gradient(top, rgba(229, 229, 229, .8), rgba(191, 191, 191, .7)); /*Firefox*/
+            background-image: -webkit-gradient(linear, center top, center bottom, from(rgba(229, 229, 229, .8)), to(rgba(191, 191, 191, .7))); /*Safari/Chrome*/
+            -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#fbfbfb,EndColorStr=#BFBFBF)"; /*IE8*/
+            background-image: linear-gradient(top, #fbfbfb, #BFBFBF); /*Standard*/
+        /* margin: 10px; */
+        /*padding: 0px 10px;*/
+            height: 25px;
+            border-top: 1px solid rgb(10, 10, 10);
+            border-left: 1px solid rgb(10, 10, 10);
+            border-right: 1px solid rgb(10, 10, 10);
+            -moz-border-radius-topright: 2px;
+            -moz-border-radius-topleft: 2px;
+            -webkit-border-top-left-radius: 2px;
+            -webkit-border-top-right-radius: 2px;
+            -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+        }
+
+        .scrollview-container {
+            border-left: 1px solid rgb(10, 10, 10);
+            border-right: 1px solid rgb(10, 10, 10);
+            border-bottom: 1px solid rgb(10, 10, 10);
+        }
+
+        #scrollable-container {
+
+        }
+
+        .horiz {
+            width: 100%;
+        }
+
+        .paged > .content {
+            display: inline-block;
+            float: left;
+            height: 140px;
+            width: 140px;
+            position: relative;
+        }
+    </style>
+{% endblock additional_style %}
+{% block content %}
+    <div class="inner_content">
+        <div class="yui3-u-1">
+            <div class="scrollview-header">
+                <span><strong>Most Viewed Legislation</strong></span>
+                <span>
+                    {% if most_viewed.has_previous %}
+                        <a href="?page={{ most_viewed.previous_page_number }}"
+                           id="prev-page">previous</a>
+                    {% else %}
+                        <a href="" id="prev-page">previous</a>
+                    {% endif %}
+
+                    {% if most_viewed.has_next %}
+                        <a href="?page={{ most_viewed.next_page_number }}"
+                           id="next-page">next</a>
+                    {% else %}
+                        <a href="" id="next-page">next</a>
+                    {% endif %}
+                </span>
+                <span style="float:right"><a href="">more</a></span>
+            </div>
+            <div class="scrollview-container" style="height:160px;">
+                <div id="scrollable" class="horiz">
+                    <div id="scrollable-container" class="scroll-container">
+                        <div class="paged">
+                            {% for bill in most_viewed.object_list %}
+                                <div class="content">
+                                    <h4>
+                                        <a href="{{ bill.get_absolute_url|urlencode }}">{{ bill.number }}</a>
+                                        - {{ bill.title }}</h4>
+
+                                    <div style="position:absolute;bottom:40px;">
+                                        <span>{{ bill.actions.latest.action }}</span>
+                                        <br/>
+                                        <span>{{bill.actions.latest.date|naturalday}}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="yui3-u-1"
+                 {% if tracked_bills %}{% else %}style="display:none;{% endif %}">
+                <div class="inner">
+                    <strong>Legislation I am watching:</strong>
+                    <span style="float:right"><a href="" id="toggle-tracking">toggle
+                        tracked items</a></span>
+                </div>
+                <div class="inner-container" id="user-tracked">
+                    <div class="yui3-g">
+                        {% for tracked in tracked_bills %}
+                            {% with tracked.tracker.content_object as bill %}
+                                <div class="yui3-u-1-2">
+                                    <div class="content">
+                                        <h4><a href="{{ bill.get_absolute_url|urlencode }}">{{ bill.number }}</a> - {{ bill.title }}</h4>
+                                        <div style="text-align:center">
+                                            {%  if bill.actions.latest %}
+                                            {{ bill.actions.latest.action|capfirst }}
+                                            - {{ bill.actions.latest.date|naturalday }}
+                                            {% else %}
+                                                Awaiting First Reading.
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        
+        <div class="yui3-u-1-2">
+            <div class="inner"><strong>Newest Bills in the Senate:</strong>
+            </div>
+            <div class="inner-container">
+                {% for bill in upper_newest %}
+                    <div class="content">
+                        <h4>
+                            <a href="{{ bill.get_absolute_url|urlencode }}">{{ bill.number }}</a>
+                            - {{ bill.title }}</h4>
+
+                        <div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="content">
+                    <div style="vertical-align:middle;height:10px;text-align:right;">
+                        <a href="{% url bills.views.bills_by_chamber '50' '1r' 'senate' 'newest' %}">more</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-1-2">
+            <div class="inner"><strong>Newest Bills in the House:</strong></div>
+            <div class="inner-container">
+                {% for bill in lower_newest %}
+                    <div class="content">
+                        <h4>
+                            <a href="{{ bill.get_absolute_url|urlencode }}">{{ bill.number }}</a>
+                            - {{ bill.title }}</h4>
+
+                        <div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="content">
+                    <div style="vertical-align:middle;height:10px;text-align:right;">
+                        <a href="{% url bills.views.bills_by_chamber '50' '1r' 'house' 'newest' %}">more</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block endscript %}
+    <script type="text/javascript" charset="utf-8">
+        YUI({ insertBefore: "sitestyle" }).use('node', 'anim-base', 'cookie', function(Y) {
+            // according to node's documentation calling node.toggleView()
+            // with the transition module loaded should automatically run the appropriate
+            // transition. it doesnt instead complaining about missing anim even if
+            // the anim module is loaded
+            var show_tracked = Y.Cookie.getSub("preference", "show_tracked", Number);
+            var toggleTracker = Y.one('#user-tracked');
+            if (show_tracked == 0) {
+                Y.one('#user-tracked').setStyle("display", "none");
+            }
+            Y.one("#toggle-tracking").on("click", function(e) {
+                e.preventDefault();
+                toggleTracker.toggleView();
+                var showing = (toggleTracker.getStyle("display") == "none" ? 0 : 1);
+                Y.Cookie.setSub("preference", "show_tracked", showing);
+            });
+        });
+    </script>
+
+{% endblock endscript %}

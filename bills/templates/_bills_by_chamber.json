@@ -1,0 +1,1 @@
+{"ResultSet":{"total":{{ total_pages }},"next":{{ newest.next_page_number }},"previous":{{ newest.previous_page_number }},"current":{{ newest.number }},"Result":[{% for bill in newest.object_list %}{"url": "{% url bills.views.bill_overview term session bill.0 %}","bill_number": "{{ bill.0 }}","title": "{{ bill.1 }}"}{% if forloop.last %} {% else %},{% endif %}{% endfor %}]}}

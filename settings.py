@@ -1,10 +1,10 @@
-# Django settings for watchingaz project.
+import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Brandon Lewis', 'brandonlewis@anvilrockroad.com'),
 )
 
 MANAGERS = ADMINS
@@ -27,7 +27,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'America/Phoenix'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -56,7 +56,8 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                                                 'static'))
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -108,6 +109,16 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = [
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    'django.core.context_processors.static',
+    "django.core.context_processors.request",
+    "django.contrib.messages.context_processors.messages",
+]
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -115,10 +126,23 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+    'django.contrib.humanize',
+    'django.contrib.markup',
+    'django.contrib.syndication',
+    'django.contrib.comments',
+
+    'registration',
+    
+    'south',
+    'watchingaz.base',
+    'watchingaz.bills',
+    'watchingaz.people',
+    'watchingaz.committees',
+    'watchingaz.events',
+    'watchingaz.dashboard',
+    'watchingaz.tools',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -143,3 +167,21 @@ LOGGING = {
         },
     }
 }
+ACCOUNT_ACTIVATION_DAYS = 7
+#profile
+AUTH_PROFILE_MODULE = 'dashboard.Profile'
+# api keys
+YAHOO_MAPS_API_KEY = ""
+SUNLIGHT_API_KEY = ""
+VOTESMART_API_KEY = ""
+NIMSP_API_KEY = ""
+
+DATA_DIR = os.path.abspath(os.path.join(os.path.abspath(
+                                            os.path.dirname(__file__)), 'data'))
+CACHE_DIR = os.path.abspath(os.path.join(os.path.abspath(
+                                            os.path.dirname(__file__)), 'cache'))
+                                            
+try:
+    from local_settings import *
+except ImportError:
+    pass

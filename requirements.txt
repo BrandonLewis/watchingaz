@@ -1,0 +1,12 @@
+Django>=1.2.4
+django-piston==0.2.2
+django-registration>=0.7
+psycopg2==2.2.1
+-e git://github.com/sunlightlabs/django-locksmith.git#egg=django-locksmith
+south
+lxml>=2.2
+pytz>=2010l
+scrapelib>=0.4.3
+validictory>=0.6.1
+python-votesmart==0.3.0
+nimsp==0.3.3

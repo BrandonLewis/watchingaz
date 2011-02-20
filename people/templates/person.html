@@ -1,0 +1,35 @@
+{% extends 'site.html' %}
+{% block content %}
+    <div class="yui3-u-1">
+        <div class="inner_content">
+            <div class="yui3-g">
+                <div class="yui3-u-1">
+                    <div class="inner"><strong>{{ person.full_name }}</strong></div>
+                    
+                    {% for role in roles %}
+                        {% if role.committee %}
+                        <p>{{ role.committee.name }} - {{ role.type }} - {{ role.term }}</p>
+                        {% else %}
+                        <p>{{ role.type }} - {{ role.term }} - {{ role.district }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {# sponsored_bills is a list of namedtuples sorted by bill__number #}
+                {% regroup sponsored_bills|dictsortreversed:"type" by type as sponsorship %}
+                {% for p_c in sponsorship %}
+                <div class="yui3-u-1-2">
+                    <div class="inner"><strong>{% ifequal p_c.grouper 'P'%}Primary{% else %}Co-Sponsored{% endifequal %}:</strong></div>
+                    <ul>
+                        {% for bill in p_c.list %}
+                        <li><a href="{% url bills.views.bill_overview term session bill.number %}">{{ bill.number }}</a> {{ bill.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+                <div class="yui3-u-1-2">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

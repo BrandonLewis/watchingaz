@@ -1,0 +1,26 @@
+{% extends 'site.html' %}
+{% block content %}
+<div class="yui3-u-1-4">
+    <div class="content">
+        <form action='' method='get'>
+            {{ search_form.as_p }}
+            <input type="submit" value="submit"/>
+        </form>
+    </div>
+</div>
+<div class="yui3-u-3-4">
+    <div class="content">
+        {% for result in search_results %}
+        <div>
+            <p>
+                <a href="{{ result.get_absolute_url }}" rel="">{{ result.number }}</a>
+                {{result.title}}
+            </p>
+            <div>
+                <p>{{result.session.name}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

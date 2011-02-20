@@ -1,0 +1,294 @@
+{% extends 'site.html' %}
+{% load comments %}
+{% block additional_style %}
+<style>
+.hover {
+    background-color: #ADD8E6;
+    /* border:1px solid blue; */
+}
+.show {
+    background-color: #ADD8E6;
+    /* border:1px solid blue; */
+}
+.show .billcomment-actions {
+    display: block;
+}
+.commentField { clear:left; padding-left:3em; }
+.commentField > textarea { width:35em; }
+.yui3-js-enabled .HControl .comment-list { display:none; }
+.yiu3-js-enabled .yui3-commentpanel-loading { display:none; }
+.yui3-js-enabled .yui3-commentpanel { width: 6.35in;}
+.yui3-js-enabled .yui3-commentpanel-content {
+    background-color: #ADD8E6;
+}
+.yui3-js-enabled .comment-actions {
+    background-color: #ADD8E6;
+}
+.yui3-commentpanel-comment {
+    width:100%;
+    margin:5px;
+    padding:5px;
+}
+.billcomment-actions {
+    position: absolute;
+    float: right;
+    background-color: #ADD8E6;
+    /* border-left:1px solid blue;
+    border-right:1px solid blue;
+    border-bottom:1px solid blue; */
+    display:none;
+}
+.showing {
+    display:block;
+}
+
+.billtext_container {
+    
+}
+.billtext_container p {
+    clear:none;
+}
+.yui3-js-enabled #billTools{
+    display:none;
+}
+.hidden {
+    display:none;
+}
+.visible {
+    display:block;
+}
+
+.Section2 {
+    width:6.35in;
+}
+.Insert {
+    text-transform: uppercase;
+    color: blue;
+}
+.strike {
+    text-decoration: line-through;
+    color:red;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="yui3-u-1">
+    {{ text|safe }}
+    <div id="billTools" class="yui3-commentpanel-loading">
+        <div class="comment-form" id="comment-form">
+            {# TODO this needs o be replace as bill comments are attatched to text nodes in a given bill version #}
+            {% get_comment_form for version as form %}
+            <form action="{% comment_form_target %}" method="post">
+                {% csrf_token %}
+                {{ form.content_type }}
+                {{ form.object_pk }}
+                {{ form.timestamp }}
+                {{ form.security_hash }}
+                <div class="hidden">{{ form.honeypot }}</div>
+                <ul>
+                    <li style="float:left;list-style:none;padding-left:5px;">{{ form.name.label }}: {{ form.name }}</li>
+                    <li style="float:left;list-style:none;padding-left:5px;">{{ form.email.label }}: {{ form.email }}</li>
+                </ul>
+                <div  class="commentField">{{ form.comment }}</div>
+                <input type="submit" id="submit" value="Post your comment" class="submit-post" name="submit">
+            </form>     
+        </div>
+        <div class="comment-list" id="comment-list">
+        {% for comment in commented_nodes %}
+            <div class="comment {{ comment.object_pk }}">
+                <a name="c{{ comment.id }}"></a>
+                <a href="{% get_comment_permalink comment %}">
+                    permalink for comment #{{ forloop.counter }}
+                </a>
+                <div>
+                    {{ comment.comment }}
+                </div>
+            </div>
+        {% empty %}{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block endscript %}
+<script type="text/javascript" charset="utf-8">
+YUI().use("mygov", "node", "align-plugin", "event", "anim", 
+                          "substitute", "io", function(Y) {
+    
+    /***************************************************************************
+     * Begining of paragraph toolbar
+     **************************************************************************/
+    var ACTION_TEMPLATE = '<span id="{node_id}" class="billcomment-actions">' +
+                          '<a href="#show" class="show-comments">Show Comments</a> ' +
+                          '<a href="/comments/" class="add-comment">Add Comment</a>' +
+                          '</span>',
+        mygov = new Y.MyGov(),
+        sectionTwo = Y.one('.Section2'),
+        commentpanel = Y.one('#billTools');
+    mg.Y = Y;
+    mg.validateForm = function(form){
+        return true;
+    }
+    mg.post_comment_handler = {
+        success: function(id, o, args) {
+            Y.one("#notify").set("innerHTML", "Your comment was posted successfully.");
+            var parent = args['remove'].get("parentNode");
+            parent.remove(args['remove']);
+            parent.get("parentNode").fx.run();
+        },
+        failure: function(id, o, args) {
+            
+        }
+    };
+    mg.get_comment_handler = {
+        success: function(id, o, args) {
+            var oldForm = Y.one('#comment-form');
+            var newForm = Y.Node.create(o.responseText);
+            newForm.one('#id_name').set('value', oldForm.one('#id_name').get('value'));
+            newForm.one('#id_email').set('value', oldForm.one('#id_email').get('value'));
+            newForm.one('#id_comment').set('value', oldForm.one('#id_comment').get('value'));
+            newForm.setStyle("display", "none");
+            oldForm.insert(newForm);
+            var cfg = mg.post_comment_cfg;
+            cfg.form = {id: newForm.one('form')};
+            cfg.arguments = {remove: newForm};
+            Y.log(cfg);
+            Y.log("fired first event");
+            Y.io('/comments/post/', cfg);
+        },
+        failure: function(id, o, args) {
+            Y.log(id + ": Transaction Event Failure.  The status text is: " + o.statusText);
+        },
+
+    };
+    mg.get_comment_cfg = {
+        on: {
+                /* start: tH.start,
+                complete: tH.complete,*/
+                success: mg.get_comment_handler.success,
+                failure: mg.get_comment_handler.failure
+                /* end: tH.end */
+        },
+        context: mg.get_comment_handler
+        /* headers: { 'X-Transaction': 'GET Example'},*/
+    };
+
+    mg.post_comment_cfg = {
+        method: "POST",
+        on: {
+                /* start: tH.start,
+                complete: tH.complete,*/
+                success: mg.post_comment_handler.success,
+                failure: mg.post_comment_handler.failure
+                /* end: tH.end */
+        },
+        context: mg.post_comment_handler
+        /* headers: { 'X-Transaction': 'GET Example'},*/
+    };
+    function setupComments() {
+        var comments = Y.all('.yui3-commentpanel-comment');
+        for (comment in comments) {
+            var query = 'div.billtext_container p[@nid = {node_id}]';
+            var textContainer = Y.one('div.billtext_container p[@nid="' + comment.get('nid') + '"]');
+            textNode.get()
+        }
+    }
+    // stupid one should be able to handle :
+    function getNodeId(p) {
+        return "#s_" + p.getAttribute('nid').replace(/:/g, '-');
+    }
+    // see above
+    function revertNodeId(id) {
+        return id.replace('s_', '').replace(/-/g, ':');
+    }
+    function setupActionNode(parent) {
+        var aN = parent.create(ACTION_TEMPLATE);
+        aN.plug(Y.Plugin.Align);
+    }
+    
+    function setupAddCommentForm(node) {
+        
+    }
+    function getComments(node) {
+        
+    }
+    
+    function showComments(e, context) {
+        // this is .billtext_containter
+        
+    }
+    
+    function addComment(e, context) {
+        var commentForm = Y.one('#comment-form');
+        context.one('.HControl').append(commentForm);
+        mg.context = context;
+        commentForm.setStyle('display', 'block');
+        commentForm.one('#submit').on('click', function(e){
+                e.preventDefault();
+                var valid = mg.validateForm(commentForm)
+                if (valid === true ){
+                    Y.io('/commentable/VersionText/' + context.one('p').getAttribute('nid') +'/', mg.get_comment_cfg);
+                } else {
+                    
+                }
+            });
+    }
+    
+    function setupHControl(node) {
+        node.plug(Y.Plugin.NodeFX, {
+            from: { height: 0 },
+            to: {height: function(node) {
+                    return node.get('scrollHeight');
+                }
+            },
+            easing: Y.Easing.easeOut,
+            duration: 0.7
+        });
+        
+        node.fx.on('end', function(){
+            node.get('parentNode').toggleClass('show');
+            node.fx.set('reverse', !node.fx.get('reverse'));
+        });
+    }
+    function onHover(e) {
+        var hparent = this,
+            node_id = getNodeId(this.one('p')),
+            actionNode = hparent.one(node_id),
+            hcontrol = hparent.one('.HControl');
+        hparent.addClass("hover");
+        if (!actionNode){
+            actionNode = hparent.create(Y.substitute(ACTION_TEMPLATE, {"node_id": node_id.substring(1)}));
+            actionNode.plug(Y.Plugin.Align);
+            setupHControl(hcontrol);
+            
+            actionNode.one('.show-comments').on('click', function(e){
+                e.preventDefault();
+                var context = this;
+                showComments(e, context);
+                hcontrol.fx.run();
+            }, hparent);
+            
+            actionNode.one('.add-comment').on('click', function(e){
+                e.preventDefault();
+                var context = this;
+                addComment(e, context);
+                hcontrol.fx.run();
+            }, hparent);
+            hparent.append(actionNode);
+        }
+        actionNode.addClass('showing');
+        actionNode.align.to(hparent, 'br', 'tr');
+        // take care of border in FF
+        if (Y.UA.gecko) actionNode.setX(actionNode.getX()-1);
+        actionNode.setY(actionNode.getY()-1);
+    }
+    function endHover(e) {
+        this.removeClass("hover");
+        var node_id = getNodeId(this.one('p'));
+        this.one(node_id).removeClass('showing');
+    }
+    sectionTwo.delegate('mouseenter', onHover, '.billtext_container');
+    sectionTwo.delegate('mouseleave', endHover, '.billtext_container');
+});
+</script>
+
+{% endblock endscript %}

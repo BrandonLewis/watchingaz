@@ -1,0 +1,23 @@
+{% extends 'site.html' %}
+{% block content %}
+    <div class="yui3-u-1">
+        <div class="inner_content">
+            <div class="yui3-g">
+                {% regroup people by chamber as chamber_list %}
+                {% for chamber in chamber_list %}
+                <div class="yui3-u-1-2">
+                    <table style="width:100%;">
+                        <thead class="inner"><tr><td>{% ifequal chamber.grouper 'lower' %}House of Representatives{% else %}Senate{%  endifequal %}</td><td>District</td></tr></thead>
+                        {%  for person in chamber.list %}
+                        <tr>
+                            <td><span><a href="{% url people.views.person_view person.leg_id %}">{{ person.full_name }}</a></span></td>
+                            <td>{{  person.district }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                {%  endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

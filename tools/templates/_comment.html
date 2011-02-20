@@ -1,0 +1,18 @@
+{% load comments %}
+<div class="comment-form">
+    {% get_comment_form for commentable as form %}
+    <form action="{% comment_form_target %}" method="post">
+        {% csrf_token %}
+        {{ form.content_type }}
+        {{ form.object_pk }}
+        {{ form.timestamp }}
+        {{ form.security_hash }}
+        <div class="hidden">{{ form.honeypot }}</div>
+        <ul>
+            <li style="float:left;list-style:none;padding-left:5px;">{{ form.name.label }}: {{ form.name }}</li>
+            <li style="float:left;list-style:none;padding-left:5px;">{{ form.email.label }}: {{ form.email }}</li>
+        </ul>
+        <div  class="commentField">{{ form.comment }}</div>
+        <input type="submit" id="submit" value="Post your comment" class="submit-post" name="submit">
+    </form>     
+</div>

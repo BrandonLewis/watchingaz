@@ -1,0 +1,222 @@
+{% extends 'site.html' %}
+{% load humanize %}
+{% block additional_style %}
+<style type="text/css">
+#actionable {
+    
+}
+.event_slideshow {
+    overflow: hidden;
+    width:300px;
+    height:100px;
+}
+.slideshow-item{
+    display:block;
+    width:300px;
+    margin:5px;
+    background-color:rgb(250, 250, 250);
+}
+.news-items{}
+.news-items ul li {
+    list-style-type:none;
+}
+.news-item{
+    background-color: rgb(191,191,191);
+    padding: 5px;
+    margin-bottom:5px;
+    border-radius: 5px;
+}
+.hide-no-js {
+    display:none;
+}
+.yui3-enabled .hide-no-js {
+    display:inherit;
+}
+</style>
+{% endblock additional_style %}
+{% block content %}
+<div class="yi3-u-1">
+    <div class="content" style="margin:0px;padding:10px;">
+        <div class="yui3-u-3-5">
+            <div class="content_container" style="clear:none;float:left;">
+                <p>Welcome to Watching AZ, where you can track legislation from the state of Arizona and its legislators.</p>
+                <p>Use these tools to keep up to date on the issues that you care about.</p>
+            </div>
+        </div>
+        <div class="yui3-u-2-5" id="quick-info">
+            <div class="content_container">
+                <div class="quick-info-box">
+                    <div class="inner" style="display:inline-block">
+                        <strong>Bills on the calendar today: </strong>
+                    </div>
+                    <div id="today" class="event_slideshow">
+                        {% for event in today_events %}
+                        <div class="slideshow-item">
+                            <h4><a href="{{event.id}}">{{ event.title }}</a></h4>
+                            <span>{{event.participant}}</span>
+                            <span>{{event.when}} - {{event.location}}</span>
+                        </div>
+                        {% empty %}
+                        <div class="slideshow-item no-items">
+                            <p>There are no events scheduled for today.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if today_events %}
+                        <a href="/events/">See todays calendar.</a>
+                    {% endif %}
+                </div>
+                <div class="quick-info-box">
+                    <div class="inner" style="display:inline-block">
+                        <strong>Events for this week: </strong>
+                    </div>
+                    <div id="this_week" class="event_slideshow">
+                        {% for event in week_events %}
+                        <div class="slideshow-item">
+                            <h4><a href="{{event.id}}">{{ event.title }}</a></h4>
+                            <span>{{event.participant}}</span>
+                            <span>{{event.when}} - {{event.location}}</span>
+                        </div>
+                        {% empty %}
+                        <div class="slideshow-item no-items">
+                            <p>There are no meetings scheduled or this week.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if week_events %}
+                        <a href="/events/">See the calendar for this week.</a>
+                    {% endif %}
+                </div>
+                <div class="quick-info-box">
+                    <div class="inner" style="display:inline-block">
+                        <strong>Bills on the calendar this week: </strong>
+                    </div>
+                    <div id="actionable" class="event_slideshow">
+                        {% for bill in bills_list %}
+                        <div class="slideshow-item">
+                            <h4><a href="{{bill.get_absolute_url}}"><b>{{ bill.number }}</b></a> {{ bill.title }}</h4>
+                            <span>
+                            {% with bill.actions.latest as latest %}
+                            {% if bill.actions.latest %}
+                                <span>{{latest.actor}} </span>
+                                <span>{{latest.action}}</span>
+                                <span>{{latest.date|naturalday}}</span>
+                            {% endif %}
+                            {% endwith %}
+                            </span>
+                        </div>
+                        {% empty %}
+                        <div class="slideshow-item no-items">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if bills_list %}
+                        <a href="/events/">See all the bills on the calendar for this week.</a>
+                    {% endif %}
+                </div>  
+            </div>
+        </div>  
+    </div>
+</div>
+<div class="yui3-u-1">
+    <div class="content">
+        <div class="yui3-g">
+            <div class="yui3-u-1-2">
+                <div class="inner hide-no-js" style="display:inline-block">
+                    <strong>Legislative news from around the web: </strong>
+                </div>
+                <div class="content_container" id="news-container"></div>
+            </div>
+            <div class="yui3-u-1-2" id="questions-container">
+                <div class="inner" style="display:inline-block">
+                    <strong>Newest questions about legislation: </strong>
+                </div>
+                <div class="content_container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block endscript %}
+<script type="text/javascript" charset="utf-8">
+YUI({
+    modules: {
+            'gallery-yui-slideshow': {
+                    fullpath: 'http://yui.yahooapis.com/gallery-2010.03.23-17-54/build/gallery-yui-slideshow/gallery-yui-slideshow-min.js',
+                    requires: ['anim'],
+                    optional: [],
+                    supersedes: []
+            }
+    }
+}).use('gallery-yui-slideshow', 'node', 'substitute', 'cache-offline',
+       "datasource-get", "datasource-jsonschema", "datasource-cache",
+function(Y)
+{
+    Y.each(['#today', '#this_week', '#actionable'], function(value, key, obj){
+            var event_container = Y.one(value);
+            if (!event_container.one('.no-items') && event_container.get('children').size() > 1){
+                var slideshow = new Y.Slideshow(event_container);
+            }
+        });
+    var newsContainer = Y.one("#news-container"),
+        // Class Constants
+        NEWS_ITEM = 'news-item',
+        myDataSource = new Y.DataSource.Get({source:"http://query.yahooapis.com/v1/public/yql"}),
+        callback = {
+            success: function(e){
+                var el = Y.Node.create('<div class="news-items"></div>');
+                if (!e.response.results){
+                    var NO_NEWS = '<div class="'+ NEWS_ITEM+'">'+
+                                  '<p>No recent stories in the news.</p>' +
+                                  '</div>';
+                    var headline = Y.Node.create(NO_NEWS);
+                    el.append(headline);
+                } else {
+                        // news_list = Y.Node.create('<ul></ul>'),
+                    var LINK_ABSTRACT = '<div class="'+NEWS_ITEM+'">' +
+                                        '<p>{date} - {source}</p>' +
+                                        '<p><a href="{url}">{title}</a></p>' +
+                                        '<p>{abstract}</p>' +
+                                        '</div>',
+                        LINK_TO = '<div class="'+NEWS_ITEM+'">' +
+                                  '<p>{date} - {source}</p>' +
+                                  '<p><a href="{url}">{title}</a></p></div>';
+                    Y.each(e.response.results, function(value, key, obj){
+                        if (key == 0){
+                            var headline = Y.Node.create(Y.substitute(LINK_ABSTRACT, value));
+                        } else {
+                            var headline = Y.Node.create(Y.substitute(LINK_TO, value));
+                        }
+                        el.appendChild(headline);
+                    });
+                }
+                //el.append(news_list);
+                newsContainer.appendChild(el);
+            },
+            failure: function(e){
+                newsContainer.setContent("<p>Could not retrieve data: " + e.error.message + "</p>");
+            }
+        };
+        myDataSource.plug(Y.Plugin.DataSourceJSONSchema, {
+            schema: {
+                resultListLocator: "query.results.result",
+                resultFields: ["title", "date", "source", "abstract", "url"]
+            }
+        });
+
+    myDataSource.plug(Y.Plugin.DataSourceCache, {cache: Y.CacheOffline, max:1,
+                                                 expires:2}); //21600000}); //six hours
+    myDataSource.cache.on("retrieve", function(e){
+        source = "cache";
+    });
+    mg.data = myDataSource;
+    myDataSource.sendRequest(
+    {
+        request:"?q=select%20title%2C%20abstract%2C%20date%2C%20source%2C%20url%20from%20search.news%20where%20query%3D%22arizona%2C%20legislation%2C%20legislature%22%20limit%205%20%7C%20sort(field%3D%22date%22)%20%7C%20reverse()&format=json",
+        callback:callback
+    });
+
+});
+</script>
+
+{% endblock endscript %}

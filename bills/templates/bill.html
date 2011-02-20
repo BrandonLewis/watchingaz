@@ -1,0 +1,360 @@
+{% extends 'site.html' %}
+{% load comments %}
+{% load humanize %}
+{% block additional_meta %}
+{% endblock additional_meta %}
+{% block additional_style %}
+<style>
+    .yui3-scrollview {
+        width:300px;
+        border:1px solid #000;
+        border-top:0;
+    }
+    .yui3-scrollview li {
+        border-bottom:1px solid #CCCCCC;
+    }
+    #scrollheader {
+    background-color:#6d83a1;
+    border:1px solid #000;
+    margin:10px 10px 0 10px;
+
+    height:44px;
+    width:400px;
+
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        from(#d8dee6),
+        color-stop(0.01, #b0bccc),
+        color-stop(0.49, #889bb3),
+        color-stop(0.50, #8094ae),
+        to(#6d83a1)
+    );
+
+    float:left;
+}
+
+#scrollheader.horiz {
+    width:320px;
+}
+
+#scrollheader h1 {
+	color: #fff;
+
+    margin:0;
+	padding:10px 0;
+
+	text-align:center;
+
+	font-size:150%;
+	font-weight:bold;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.7);
+}
+
+#scrollable.horiz {
+    height:auto;
+    white-space: nowrap;
+    text-align: center;
+}
+
+#scrollable.horiz li {
+    border-bottom: 0;
+}
+
+#scrollable.horiz img {
+    border-width:2px;
+    border-style:solid;
+}
+
+#scrollable li {
+    border-bottom: 1px solid #ccc;
+}
+
+#scrollable li div {
+    padding: 8px;
+    font-size: 140%;
+    font-weight: bold;
+}
+
+#scrollable img {
+	width: 300px;
+	margin: 10px;
+    margin-bottom:10px;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+
+#scrollable.yui3-scrollview-loading {
+    display:block;
+    visibility:hidden;
+}
+
+#additional-content {
+    display:block;
+    padding:5px;
+}
+
+#pager {
+    margin:0 10px 0 10px;
+    width:320px;
+    clear:left;
+    float:left;
+}
+
+#summary > ul.bill-status {
+    text-align:center;
+}
+.bill_link {
+    
+}
+#billstats {
+    margin:10px 10px 10px 10px;
+    width:90%;
+    height:150px;
+
+}
+#billsupport {
+    margin:10px 10px 10px 10px;
+    width:90%;
+    height:150px;
+}
+#action_table {
+    width:90%;
+    margin:0px auto;
+    text-align:center;
+}
+#action_table p {
+    line-height:1em;
+    margin-bottom:0;
+}
+</style>
+{% endblock additional_style %}
+        {% block content %}
+        <div class="yui3-u-1">
+            <div class="content">
+                <div style="margin:0; padding:5px;text-align:center;">
+                    <div class="inner">
+                        <h1>{{ bill.number}} - {{ bill.title }}</h1>
+                    </div>
+                </div>
+                <div id="BillTabs">
+                    <ul>
+                        <li><a href="#summary">Summary</a></li>
+                        <li><a href="#actions">All Actions</a></li>
+                        <li><a href="#sponsors">Sponsors</a></li>
+                    </ul>
+                    <div class="yui3-g">
+                        <div id="summary" class="yui3-u-3-5">
+                            <div class="content">
+                                <div class="inner">
+                                    <strong>Bill Summary: </strong>
+                                </div>
+                                <div style="text-align:center">
+                                    <ul class="bill-status">
+                                        {% with bill.status.get_status as status %}
+                                        {% with status.introduced.passed as passed %}
+                                        <li class="{{ passed|default:'no-action' }}">
+                                            <p>First Read</p>
+                                            <p>{{ status.introduced.date|date:'m/j/Y'|default:' - ' }}</p>
+                                        </li>
+                                        {% endwith %}
+                                        {% with status.primary.passed as passed %}
+                                        <li class="{{ passed|default:'no-action' }}">
+                                            <p>{{ chamber }} Passed</p>
+                                            <p>{{ status.primary.date|date:'m/j/Y'|default:' - ' }}</p>
+                                        </li>
+                                        {% endwith %}
+                                        {% with status.other.passed as passed %}
+                                        <li class="{{ passed|default:'no-action' }}">
+                                            <p>{{ other_chamber }} Passed</p>
+                                            <p>{{ status.other.date|date:'m/j/Y'|default:' - ' }}</p>
+                                        </li>
+                                        {% endwith %}
+                                        {% with status.governor.passed as passed %}
+                                        <li class="{{ passed|default:'no-action' }}">
+                                            <p>Governor Signed</p>
+                                            <p>{{ status.governor.date|date:'m/j/Y'|default:' - ' }}</p>
+                                        </li>
+                                        {% endwith %}
+                                        {% if status.override %}
+                                        <li class="no-action">
+                                            <p>Veto Override</p>
+                                            <p>-</p>
+                                        </li>
+                                        {% endif %}
+                                        {% endwith %}
+                                    </ul>
+                                </div>
+                                <div id="bill-summary">
+                                    <div class="summary_text content">
+                                        {% if summaries and summaries.0.text != '' %}
+                                        {{summaries.0.text}}
+                                        {% else %}
+                                        <p>
+                                            There is not currently a summary available. This is usually because there
+                                            none have been posted at <a href="http://www.azleg.gov">Arizona's State Legislature</a>.
+                                            But, occasionally it's just because we haven't updated our database yet, so feel free to
+                                            check AZLeg's overview for this bill, <a href="{{ bill.sources.all.0.url }}">here</a>.
+                                        </p>
+                                        {% endif %}
+                                        {{ text|safe }}
+                                    </div>
+                                </div>
+                                <div style="clear:both">
+                                    <div class="inner" style="display:inline-block">
+                                        <strong>Actions Overview: </strong>
+                                    </div>
+                                    <div class="content">
+                                        {{ latest_action|safe }}
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        <div id="actions" class="yui3-u-2-5">
+                            <div class="content">
+                                <div class="inner">
+                                    <strong>My Actions: </strong>
+                                </div>
+                                <div class="content">
+                                    <table id="action_table">
+                                        <tr>
+                                            <td>
+                                            <p><strong>Read the Bill:</strong></p>    
+                                            </td>
+                                        </tr>
+                                        {% for version in bill.versions.all %}
+                                        <tr>{% if version.doc_id %}
+                                            <td><p><a href="{{version.get_absolute_url}}">{{version.name}}</a></p></td>
+                                            {% else %}
+                                            <td><p><a href="{{version.url}}">{{version.name}}</a>(external)</p></td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                        {% if summaries %}
+                                        <tr>
+                                            <td>
+                                                <p><strong>Summaries:</strong></p>
+                                            </td>
+                                        </tr>
+                                        {% for summary in summaries %}
+                                        <tr><td><a href="{{summary.url}}">{{summary.name}}</a></td></tr>
+                                        {% endfor %}
+                                        {% endif %}
+                                        <tr>
+                                            <td>
+                                                {% if is_tracking %}
+                                                <p>To change your tracking preferences click <a href="">here</a></p>
+                                                {% else %}
+                                                <form method="post" action="/trackers/add/">
+                                                    <label for="track_this">Get email updates for this bill: </label>
+                                                    <input type="submit" value="Track this" id="track_this"/>
+                                                    {% csrf_token %}
+                                                    {{ tracker_form.object_id }}
+                                                    {{ tracker_form.content_type }}
+                                                    {{ tracker_form.where_to }}
+                                                </form>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <form method="post" action="/bills/questions/">
+                                                    <label for="billquestion">Have a question about this bill? </label>
+                                                    <input type="submit" value="Ask It" id="billquestion"/>
+                                                    <input type="hidden" value="{{bill.id}}" id="tracker_id"/> 
+                                                </form> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div id="billsupport"></div>
+                                                <script type="application/x-javascript">
+                                                    YUI.namespace('mg').support = {{bill_support|default:'[{"stance": "Users For", "count": 1}, {"stance": "Users Against", "count":1}]'|safe}};
+                                                </script>
+                                                <div style="text-align:center" class="yui3-g">
+                                                    <div class="yui3-u-1-2">
+                                                    <form name="user-vote" action="/tools/vote/for/" method="POST">
+                                                        <input type="submit" value="Support" name="support" />
+                                                        <input type="hidden" value="{{bill.id}}" id="vote_for"/>
+                                                    </form>
+                                                    </div>
+                                                    <div class="yui3-u-1-2">
+                                                    <form name="user-vote" action="/tools/vote/against" method="POST">
+                                                        <input type="submit" value="Oppose" name="oppose" />
+                                                        <input type="hidden" value="{{bill.id}}" id="vote_against"/>
+                                                    </form>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>  
+                                </div>  
+                            </div>
+                        </div>
+                        <div id="sponsors" class="yui3-u-3-5">
+                            <div class="content">
+                                <div class="inner" style="display:inline-block"><strong>Sponsors:</strong></div>
+                                <div class="yui3-g">
+                                    {% regroup sponsors by type as sponsor_list %}
+                                    {% for sponsor in sponsor_list %}
+                                    <div class="yui3-u-1-2">
+                                        <div class="inner" style="display:inline-block">
+                                        <span>{%if sponsor.grouper == "P"%}Primary Sponsors{%else%}Co-Sponsors{%endif%}</span>
+                                        </div>
+                                        <ul>
+                                            {% for item in sponsor.list %}
+                                            <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;"><a href="{{ item.get_absolute_url }}">{{ item.person.full_name }}</a></li>
+                                            {% endfor %}
+                                        </ul>   
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock content %}
+{% block endscript %}
+<script type="text/javascript" charset="utf-8">
+    YUI({
+    fetchCSS: true,
+    insertBefore: 'sitestyle'
+}).use("mygov", "charts", "anim", "cookie", function(Y) {
+            mg.cookies = Y.Cookie;
+            Y.all('.bill_link').on('click', function(e){
+                var billText = Y.one('#summary');
+                billText.plug(Y.Plugin.NodeFX, {
+                    from: { height: 0 },
+                    to: {height: function(node) {
+                            return node.get('scrollHeight');
+                        }
+                    },
+                    easing: Y.Easing.easeOut,
+                    duration: 0.7
+                });
+            });
+                
+            var billSupportValues = mg.support,
+                BillViews = new Y.Chart({dataProvider:billSupportValues,
+                                        categoryKey:"stance", 
+                                        seriesKeys:["count"], 
+                                        type:"pie", 
+                                        seriesCollection:[
+                                            {
+                                                categoryKey:"stance",
+                                                valueKey:"count",
+                                                styles: {
+                                                    fill: {
+                                                        colors: ["#5EDA5E", "#C73C3C"]
+                                                    }
+                                                }
+                                            }
+                                        ],   
+                                       render:"#billsupport"});
+        });
+</script>
+
+{% endblock endscript %}

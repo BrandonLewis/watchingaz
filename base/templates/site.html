@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/reset-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/fonts-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/grids-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/base-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/mygov-plain-skin.css" type="text/css" id="sitestyle"/>
+        {% block additional_style %}
+        {% endblock additional_style %}
+        <script type="application/javascript" src="{{ STATIC_URL }}js/yui3/build/yui/yui-min.js" charset="utf-8">
+        </script>
+    </head>
+    <body id="doc" class="yui3-skin-sam">
+        <div class="yui3-g">
+            {% block header %}
+            {# Header block should have a DIV id='header' #}
+            <div class="yui3-u-1" id="header">
+                <div id="innerHeader">
+                    {% if user.is_authenticated %}
+                    <div class="login-bar">
+                        <span style="color:black;">Welcome, <a href="{{ user.get_absolute_url }}" id="opendash">{{ user.username }}</a></span>
+                        <span><a href="/accounts/logout/">Logout</a></span>
+                    </div>
+                    {% else %} 
+                    <div class="login-bar">
+                        <span style="color:black;"><a href="/accounts/login/">log in</a></span>
+                        <span><a href="/accounts/register/">register</a></span>
+                    </div> 
+                    {% endif %}  
+                    {% block logo %} 
+                    {% endblock logo %}  
+                    {% block announce %}
+                    <div id="notify"></div>
+                    {% endblock announce %}  
+                </div>
+                <div id="sitenavigation" class="yui3-menu yui3-menu-horizontal">
+                    <div class="yui3-menu-content">
+                        <ul>
+                            <li class="yui3-menuitem"><a class="yui3-menuitem-content" href="/">Home</a></li>
+                            <li class="yui3-menuitem"><a class="yui3-menuitem-content" href="/bills/">Legislation</a></li>
+                            <li class="yui3-menuitem"><a class="yui3-menuitem-content" href="/people/">Respresentatives</a></li>
+                            <li class="yui3-menuitem" style="float:right;clear:none;">
+                                <div id="searchbar">
+                                    <form action="/search/" method="get">
+                                        <input type="text" id="search-input" name="search_field" />
+                                        <input type="submit" id="search-submit" value="search"/>
+                                        <div style="display:none">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <input type="radio" id="id_search_options_0" value="b" name="search_options"/>
+                                                    </td>
+                                                    <td>
+                                                        <label for="id_search_options_0">Bills</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="radio" id="id_search_options_1" value="l" name="search_options"/>
+                                                    </td>
+                                                    <td>
+                                                        <label for="id_search_options_1">People</label>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>  
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endblock header %}
+        </div>
+        <div class="yui3-g main-container">
+            {% block content %}
+            <div class="yui3-u-2-5" id="firstColumn">
+                
+            </div>
+            <div class="yui3-u-3-5" id="secondColumn">
+                
+            </div>
+            {% endblock content %}
+        </div>
+        {% block footer %}
+        <div class="yui3-g" id="footer">
+            <div class="yui3-u-1">
+                <div class="yui3-g">
+                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
+                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
+                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
+                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
+                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
+                </div>
+            </div>
+            <div class="yui3-u-1">
+                <div class="content">
+                    <p>
+                        &copy; 2010 &lt;Anvil Rock Road&gt;
+                    </p>
+                    - <a href="">About</a>
+                    - <a href="">Terms of Service</a>
+                    - <a href="">Privacy Policy</a>
+                    - <a href="">DMCA Notice</a>    
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        <script type="application/javascript" src="{{ STATIC_URL }}js/mygov-2010-12-30.js" charset="utf-8">
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            YUI({insertBefore: "sitestyle"}).use("node-menunav", function(Y) {
+                    var menu = Y.one("#sitenavigation");
+                    menu.plug(Y.Plugin.NodeMenuNav);
+                }); 
+        </script>
+        {% block endscript %}
+        {% endblock endscript %}
+        {% block extra_body %}
+        {% endblock extra_body %}
+    </body>
+</html>
