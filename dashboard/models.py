@@ -11,7 +11,7 @@ def profile_handler(sender, **kwargs):
             return
         profile = Profile(user=kwargs['instance'])
         profile.save()
-post_save(profile_handler, sender=User)
+post_save.connect(profile_handler, sender=User)
 class Profile(models.Model):
     user = models.OneToOneField(User, unique=True, related_name='profile')
     bio = models.TextField(blank=True, null=True)

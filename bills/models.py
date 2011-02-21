@@ -138,7 +138,7 @@ def bill_status_handler(sender, **kwargs):
     if 'created' in kwargs and kwargs['created']:
         status = BillStatus(bill=kwargs['instance'])
         status.save()
-post_save(bill_status_handler, sender=Bill)
+post_save.connect(bill_status_handler, sender=Bill)
 class BillStatus(models.Model):
     bill = models.OneToOneField(Bill, related_name='status')
     introduced = models.NullBooleanField(null=True, blank=True)
