@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+#from django.dispatch import receiver
 from watchingaz.utils import legislature_to_number
 from watchingaz.base.models import BaseSource, Session
 from watchingaz.people.models import Person
@@ -133,12 +133,12 @@ class BillPageView(models.Model):
         return "%s: %s: %d" % (self.bill.number, self.date.strftime("%m/%d/%Y"),
                                self.views)
 
-@receiver(post_save, sender=Bill)
+#@receiver(post_save, sender=Bill)
 def bill_status_handler(sender, **kwargs):
     if 'created' in kwargs and kwargs['created']:
         status = BillStatus(bill=kwargs['instance'])
         status.save()
-
+post_save(bill_status_handler, sender=Bill)
 class BillStatus(models.Model):
     bill = models.OneToOneField(Bill, related_name='status')
     introduced = models.NullBooleanField(null=True, blank=True)

@@ -3,14 +3,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>{{ title }}</title>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/reset-min.css" type="text/css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/fonts-min.css" type="text/css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/grids-min.css" type="text/css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/base-min.css" type="text/css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/mygov-plain-skin.css" type="text/css" id="sitestyle"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}media/css/reset-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}media/css/fonts-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}media/css/grids-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}media/css/base-min.css" type="text/css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}media/css/mygov-plain-skin.css" type="text/css" id="sitestyle"/>
         {% block additional_style %}
         {% endblock additional_style %}
-        <script type="application/javascript" src="{{ STATIC_URL }}js/yui3/build/yui/yui-min.js" charset="utf-8">
+        <script type="application/javascript" src="{{ STATIC_URL }}media/js/yui3/build/yui/yui-min.js" charset="utf-8">
         </script>
     </head>
     <body id="doc" class="yui3-skin-sam">
@@ -110,7 +110,7 @@
             </div>
         </div>
         {% endblock %}
-        <script type="application/javascript" src="{{ STATIC_URL }}js/mygov-2010-12-30.js" charset="utf-8">
+        <script type="application/javascript" src="{{ STATIC_URL }}media/js/mygov-2010-12-30.js" charset="utf-8">
         </script>
         <script type="text/javascript" charset="utf-8">
             YUI({insertBefore: "sitestyle"}).use("node-menunav", function(Y) {
