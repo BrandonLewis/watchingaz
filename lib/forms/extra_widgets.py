@@ -1,3 +1,8 @@
+"""
+Random widgets for forms
+
+MultiSelectFormField came from http://djangosnippets.org/snippets/1200/
+"""
 from django import forms
 
 class MultiSelectFormField(forms.MultipleChoiceField):

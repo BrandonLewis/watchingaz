@@ -11,7 +11,7 @@ bill_tuple = namedtuple("BillTuple", ['number','title', 'type'])
 
 def person_index(request):
     c = {'term':'50', 'session': '1r'}
-    c['people'] = Person.objects.filter(roles__term="50", roles__type="member").order_by('chamber')
+    c['people'] = Person.objects.filter(roles__term="50", roles__type="member").order_by('chamber', 'district')
     return render_to_response('person_index.html', RequestContext(request, c))
 
 def person_view(request, id):

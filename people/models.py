@@ -33,6 +33,9 @@ class Person(models.Model):
     created_at = models.DateTimeField(null=True)
     updated_at = models.DateTimeField(null=True)
     page_views_count = models.IntegerField(default=0)
+    
+    def __unicode__(self):
+        return self.full_name
 
 class Role(models.Model):
     party_types = (
