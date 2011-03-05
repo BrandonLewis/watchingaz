@@ -8,9 +8,11 @@
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/grids-min.css" type="text/css"/>
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/base-min.css" type="text/css"/>
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/mygov-plain-skin.css" type="text/css" id="sitestyle"/>
+        {% block links %}
+        {% endblock links %}
         {% block additional_style %}
         {% endblock additional_style %}
-        <script type="application/javascript" src="{{ MEDIA_URL }}js/yui-min.js" charset="utf-8">
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/yui-min.js" charset="utf-8">
         </script>
     </head>
     <body id="doc" class="yui3-skin-sam">
@@ -110,7 +112,7 @@
             </div>
         </div>
         {% endblock %}
-        <script type="application/javascript" src="{{ MEDIA_URL }}js/mygov-2010-12-30.js" charset="utf-8">
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/mygov-2010-12-30.js" charset="utf-8">
         </script>
         <script type="text/javascript" charset="utf-8">
             YUI({insertBefore: "sitestyle"}).use("node-menunav", function(Y) {

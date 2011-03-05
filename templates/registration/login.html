@@ -1,0 +1,19 @@
+{% extends 'site.html' %}
+{% block content %}
+{# context: form #}
+<div class="yui3-u-2-3">
+    <div class="content" style="margin-left:10%;">
+        <p>Watching AZ is in every sense "beta" and so registration is currently closed.</p>
+        <p>If you're feeling adventurous or don't mind things that don't work correctly,
+        you can request and account <a href="/accounts/registration/request/">here</a>.</p>
+    </div>
+</div>
+<div class="yui3-u-1-3">
+    <div class="content" style="margin-right:10%;">
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="submit">
+    </form>
+</div>
+{% endblock content %}

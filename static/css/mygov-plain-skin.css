@@ -24,10 +24,11 @@ html {
 */
 #innerHeader{ 
     border-bottom:1px solid #111;
-    background:rgb(250,250,250);
+    #background:rgb(250,250,250);
     background:rgba(250,250,250,.7);
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(200, 200, 200 0.8)), to(rgba(250,250,250,.7))); /* for webkit browsers */
     background: -moz-linear-gradient(100% 100% 90deg,  rgba(200, 200, 200 .8),  rgba(250,250,250,.7)); /* for firefox 3.6+ */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#C8C8C8,EndColorStr=#FAFAFA)"; /*IE8*/
     -moz-box-shadow: 0 1px 3px rgba(0,0,0,0,0.5);
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     color: #ffffff;
@@ -75,6 +76,7 @@ html {
     background-color: rgba(237, 245, 250, .5); /* #EDF5FA; */
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
     -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     box-shadow:0 1px 3px rgba(0,0,0,0.5);
@@ -331,121 +333,4 @@ html {
     background-image: -webkit-gradient(linear, center top, center bottom, from(rgba(77, 77, 77, .8)),to(rgba(229,229,229,.7))); /*Safari/Chrome*/
     -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#4D4D4D,EndColorStr=#E5E5E5)"; /*IE8*/
     background-image: linear-gradient(top, #4D4D4D, #E5E5E5); /*Standard*/
-}
-/************************************************
- *  YUI3 Base styles
- *  Might need to move above for style overrides
- ***********************************************/
-/*
-Copyright (c) 2010, Yahoo! Inc. All rights reserved.
-Code licensed under the BSD License:
-http://developer.yahoo.com/yui/license.html
-version: 3.2.0
-build: 2676
-*/
-
-.yui3-tab-panel {
-    display:none;
-}
-
-.yui3-tab-panel-selected {
-    display:block;
-}
-
-.yui3-tabview-list,
-.yui3-tab {
-    margin:0;
-    padding:0;
-    list-style:none;
-}
-
-.yui3-tabview {
-    position:relative; /* contain absolute positioned tabs (left/right) */
-}
-
-.yui3-tabview,
-.yui3-tabview-list,
-.yui3-tabview-panel,
-.yui3-tab,
-.yui3-tab-panel { /* IE: kill space between horizontal tabs */
-    zoom:1;
-}
-
-.yui3-tab {
-    display:inline-block;
-    *display:inline; /* IE */
-    vertical-align:bottom; /* safari: for overlap */
-    cursor:pointer;
-}
-
-.yui3-tab-label {
-    display:block;
-    display:inline-block;
-    padding: 6px 10px;
-    position:relative; /* IE: to allow overlap */
-    text-decoration: none;
-    vertical-align:bottom; /* safari: for overlap */
-}
-/* .yui-navset defaults to .yui-navset-top */
-.yui3-tabview-list {
-    border:solid #243356; /* color between tab list and content */
-    border-width:0 0 5px;
-    zoom:1;
-}
-
-.yui3-tab {
-    margin:0 0.2em 0 0;
-    padding:1px 0 0; /* gecko: make room for overflow */
-    zoom:1;
-}
-
-.yui3-tab-selected {
-    margin-bottom:-1px; /* for overlap (mapped to tabview-list border-width) */
-}
-
-.yui3-tab-label {
-    background:#d8d8d8 url(../../../../assets/skins/sam/sprite.png) repeat-x; /* tab background */
-    border:solid #a3a3a3;
-    border-width: 1px 1px 0 1px;
-    color:#000;
-    cursor:hand;
-    font-size:85%;
-    padding:0.3em .75em;
-    text-decoration:none;
-}
-
-.yui3-tab-label:hover,
-.yui3-tab-label:focus {
-    background:#bfdaff url(../../../../assets/skins/sam/sprite.png) repeat-x left -1300px; /* hovered tab background */
-    outline:0;
-}
-
-.yui3-tab-selected .yui3-tab-label,
-.yui3-tab-selected .yui3-tab-label:focus,
-.yui3-tab-selected .yui3-tab-label:hover { /* no hover effect for selected */
-    background:#BFBFBF url(../../../../assets/skins/sam/sprite.png) repeat-x left -1400px; /* selected tab background */
-    color:#fff;
-}
-
-.yui3-tab-selected .yui3-tab-label {
-    padding:0.4em 0.75em; /* raise selected tab */
-}
-
-.yui3-tab-selected .yui3-tab-label {
-    border-color:#243356; /* selected tab border color */
-}
-
-.yui3-tabview-panel {
-   background:rgb(250, 250, 250);
-    background:rgba(250, 250, 250,.7);
-    background-image: -moz-linear-gradient(top, rgba(250, 250, 250, .8),  rgba(229, 229, 229,.7)); /*Firefox*/
-    background-image: -webkit-gradient(linear, center top, center bottom, from(rgba(250, 250, 250, .8)),to(rgba(229, 229, 229,.7))); /*Safari/Chrome*/
-    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#FFFFFF,EndColorStr=#fbfbfb)"; /*IE8*/
-    background-image: linear-gradient(top, #FFFFFF, #fbfbfb); /*Standard*/
-}
-
-.yui3-tabview-panel {
-    border:1px solid #243356; /* content border */
-    border-top-color:#BFBFBF; /* different border color */
-    padding:0.25em 0.5em; /* content padding */
 }

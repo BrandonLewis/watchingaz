@@ -43,7 +43,13 @@ class UserVote(models.Model):
         return result
 
 class Question(models.Model):
+    user = models.ForeignKey(Profile, related_name="my_questions")
     ip = models.IPAddressField()
     email = models.EmailField()
+    subject = models.CharField(max_length=140)
     text = models.TextField()
     
+class Answer(models.Model):
+    question = models.ForeignKey(Question, related_name="answers")
+    user = models.ForeignKey(Profile, related_name="my_answers")
+    text = models.TextField()

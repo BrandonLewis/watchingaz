@@ -12,7 +12,7 @@ class BillPageViewAdmin(admin.ModelAdmin):
 admin.site.register(BillPageView, BillPageViewAdmin)
 
 class VersionAdmin(admin.ModelAdmin):
-    search_fields = ("bill__number", "bill__session", "name")
+    search_fields = ("bill__number", "bill__session__name", "name")
 
 admin.site.register(Version, VersionAdmin)
 admin.site.register(VersionText)
@@ -25,3 +25,8 @@ admin.site.register(ActionType, ActionTypeAdmin)
 class ActionAdmin(admin.ModelAdmin):
     search_fields = ("bill__number", "action")
 admin.site.register(BillAction, ActionAdmin)
+
+class SponsorAdmin(admin.ModelAdmin):
+    search_fields = ("bill__number", "person__leg_id", "person__full_name", 
+                     "person__first_name", "person__last_name")
+admin.site.register(Sponsor, SponsorAdmin)

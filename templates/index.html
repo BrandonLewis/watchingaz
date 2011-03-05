@@ -97,7 +97,7 @@
                             <h4><a href="{{bill.get_absolute_url}}"><b>{{ bill.number }}</b></a> {{ bill.title }}</h4>
                             <span>
                             {% with bill.actions.latest as latest %}
-                            {% if bill.actions.latest %}
+                            {% if latest %}
                                 <span>{{latest.actor}} </span>
                                 <span>{{latest.action}}</span>
                                 <span>{{latest.date|naturalday}}</span>
