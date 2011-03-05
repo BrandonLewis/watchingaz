@@ -74,39 +74,6 @@
 {% block content %}
 <div class="yui3-u-1">
     {{ text|safe }}
-    <div id="billTools" class="yui3-commentpanel-loading">
-        <div class="comment-form" id="comment-form">
-            {# TODO this needs o be replace as bill comments are attatched to text nodes in a given bill version #}
-            {% get_comment_form for version as form %}
-            <form action="{% comment_form_target %}" method="post">
-                {% csrf_token %}
-                {{ form.content_type }}
-                {{ form.object_pk }}
-                {{ form.timestamp }}
-                {{ form.security_hash }}
-                <div class="hidden">{{ form.honeypot }}</div>
-                <ul>
-                    <li style="float:left;list-style:none;padding-left:5px;">{{ form.name.label }}: {{ form.name }}</li>
-                    <li style="float:left;list-style:none;padding-left:5px;">{{ form.email.label }}: {{ form.email }}</li>
-                </ul>
-                <div  class="commentField">{{ form.comment }}</div>
-                <input type="submit" id="submit" value="Post your comment" class="submit-post" name="submit">
-            </form>     
-        </div>
-        <div class="comment-list" id="comment-list">
-        {% for comment in commented_nodes %}
-            <div class="comment {{ comment.object_pk }}">
-                <a name="c{{ comment.id }}"></a>
-                <a href="{% get_comment_permalink comment %}">
-                    permalink for comment #{{ forloop.counter }}
-                </a>
-                <div>
-                    {{ comment.comment }}
-                </div>
-            </div>
-        {% empty %}{% endfor %}
-        </div>
-    </div>
 </div>
 {% endblock content %}
 {% block endscript %}
@@ -141,17 +108,6 @@ YUI().use("mygov", "node", "align-plugin", "event", "anim",
     };
     mg.get_comment_handler = {
         success: function(id, o, args) {
-            var oldForm = Y.one('#comment-form');
-            var newForm = Y.Node.create(o.responseText);
-            newForm.one('#id_name').set('value', oldForm.one('#id_name').get('value'));
-            newForm.one('#id_email').set('value', oldForm.one('#id_email').get('value'));
-            newForm.one('#id_comment').set('value', oldForm.one('#id_comment').get('value'));
-            newForm.setStyle("display", "none");
-            oldForm.insert(newForm);
-            var cfg = mg.post_comment_cfg;
-            cfg.form = {id: newForm.one('form')};
-            cfg.arguments = {remove: newForm};
-            Y.log(cfg);
             Y.log("fired first event");
             Y.io('/comments/post/', cfg);
         },
@@ -162,11 +118,8 @@ YUI().use("mygov", "node", "align-plugin", "event", "anim",
     };
     mg.get_comment_cfg = {
         on: {
-                /* start: tH.start,
-                complete: tH.complete,*/
-                success: mg.get_comment_handler.success,
-                failure: mg.get_comment_handler.failure
-                /* end: tH.end */
+            success: mg.get_comment_handler.success,
+            failure: mg.get_comment_handler.failure
         },
         context: mg.get_comment_handler
         /* headers: { 'X-Transaction': 'GET Example'},*/
@@ -175,24 +128,15 @@ YUI().use("mygov", "node", "align-plugin", "event", "anim",
     mg.post_comment_cfg = {
         method: "POST",
         on: {
-                /* start: tH.start,
-                complete: tH.complete,*/
-                success: mg.post_comment_handler.success,
-                failure: mg.post_comment_handler.failure
-                /* end: tH.end */
+            success: mg.post_comment_handler.success,
+            failure: mg.post_comment_handler.failure
         },
         context: mg.post_comment_handler
         /* headers: { 'X-Transaction': 'GET Example'},*/
     };
     function setupComments() {
-        var comments = Y.all('.yui3-commentpanel-comment');
-        for (comment in comments) {
-            var query = 'div.billtext_container p[@nid = {node_id}]';
-            var textContainer = Y.one('div.billtext_container p[@nid="' + comment.get('nid') + '"]');
-            textNode.get()
-        }
     }
-    // stupid one should be able to handle :
+    // stupid Y.one should be able to handle ':'
     function getNodeId(p) {
         return "#s_" + p.getAttribute('nid').replace(/:/g, '-');
     }

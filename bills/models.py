@@ -46,11 +46,11 @@ class BillAction(models.Model):
     actor = models.TextField()
     date = models.DateTimeField()
     action = models.CharField(max_length=255)
-    type = models.ManyToManyField(ActionType)
+    atype = MultiSelectField(max_length=200, choices=ACTION_CHOICES)
     class Meta:
         get_latest_by = 'date'
     def __unicode__(self):
-        return "%s %s %s" % (self.bill.number, self.action, self.type.get())
+        return "%s %s %s" % (self.bill.number, self.action, self.type)
 
 class Bill(models.Model):
     number = models.CharField(max_length=10)
@@ -182,7 +182,7 @@ class BillStatus(models.Model):
         q = { True: 'passed', False: 'failed', None: 'no-action'}
         actions = self.bill.actions.all()
         try:
-            introduced = actions.get(type__type__icontains='bill:introduced')
+            introduced = actions.get(atype__icontains='bill:introduced')
         except ObjectDoesNotExist:
             self.introduced = None
             self.save()
@@ -191,9 +191,9 @@ class BillStatus(models.Model):
             self.introduced = True
             self.first_read_date = introduced.date
         third_read = actions.filter(actor=self.bill.chamber,
-                                    type__type__icontains="bill:reading:3")
+                                    atype__icontains="bill:reading:3")
         if third_read:
-            action = third_read[0].type.all()[0].type
+            action = third_read[0].atype
             for act in action:
                 if act == 'bill:passed':
                     self.passed_primary = True
@@ -201,10 +201,11 @@ class BillStatus(models.Model):
                 elif act == 'bill:failed':
                     self.passed_primary = False
                     self.primary_date = third_read[0].date
-        other_third = actions.filter(actor=self.bill.chamber,
-                                     type__type__icontains="bill:reading:3")
+        actor = {'upper': 'lower', 'lower': 'upper'}[self.bill.chamber]
+        other_third = actions.filter(actor=actor,
+                                     atype__icontains="bill:reading:3")
         if other_third:
-            action = other_third[0].type.all()[0].type
+            action = other_third[0].atype
             for act in action:
                 if act == 'bill:passed':
                     self.passed_other = True
@@ -212,11 +213,11 @@ class BillStatus(models.Model):
                 elif act == 'bill:failed':
                     self.passed_other = False
                     self.other_date = third_read[0].date
-        gov_act = actions.filter(type__type__icontains="governor:signed")
+        gov_act = actions.filter(atype__icontains="governor:signed")
         if gov_act:
             self.passed_gov = True
             self.gov_date = gov_act[0].date
-        gov_act = actions.filter(type__type__icontains="governor:vetoed")
+        gov_act = actions.filter(atype__icontains="governor:vetoed")
         if gov_act:
             self.passed_gov = False
             self.gov_date = gov_act[0].date

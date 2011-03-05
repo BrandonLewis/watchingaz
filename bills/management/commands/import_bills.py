@@ -165,13 +165,10 @@ def process_bill(b):
                 action=action['action'],
                 actor=action['actor'],
                 date=parse(action['date']).strftime('%Y-%m-%d %H:%M:%S'),
-                bill=bill)
-
+                bill=bill, atype=action['type'])
+        # removed the ManyToMany relation on billaction but still will use this 
+        # for common action descriptions
         action_type, c = ActionType.objects.get_or_create(type=action['type'])
-        if created:
-            a.type.add(action_type)
-        a.save()
-        del(a)
 
     for vote in b['votes']:
         process_vote(vote, bill)
@@ -190,7 +187,7 @@ def process_bill(b):
             sponsor, created = Sponsor.objects.get_or_create(bill=bill,
                                                          type=s['type'],
                                                          scraped_name=s['name'])
-        del(sponsor)
+    
     bill.save()
     print "Saved Bill: " + b['bill_id']
 

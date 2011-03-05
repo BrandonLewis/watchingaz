@@ -1,3 +1,5 @@
+import os
+from django.conf import settings
 from watchingaz.bills.models import Bill, Version, VersionText, BillPageView
 from watchingaz.utils import number_to_leg, legislature_to_number
 
@@ -28,5 +30,15 @@ def getNodePrefix(metadata):
 
 
 
-def get_bill_text(*args, **kargs):
-    return ""
+def get_bill_text(term, session, version, **kargs):
+    data_dir = settings.DATA_DIR
+    template_name = version.url.split('/')[-1]
+    path = os.path.abspath(os.path.join(data_dir, 'bill_text', term[0:2] + "Leg", 
+                                        session, template_name))
+    try:
+        template = open(path)
+        template_string = template.read()
+        template.close()
+    except IOError:
+        template_string = ""
+    return template_string

@@ -8,8 +8,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext, loader, Template
 
-from watchingaz.bills.models import Bill, Version, VersionText, BillPageView
-from watchingaz.tools.forms import AddTrackerShortForm, SearchBarForm, QuestionForm
+from watchingaz.bills.models import (Bill, ActionType, Version, VersionText, 
+                                     BillPageView)
+from watchingaz.tools.forms import (AddTrackerShortForm, SearchBarForm, 
+                                    QuestionForm)
 from watchingaz.bills.utils import get_bill_text
 from watchingaz.utils import number_to_leg, legislature_to_number
 
@@ -132,6 +134,8 @@ def bill_overview(request, term, session, bill_number):
     # sorting by date should be replaced by date added for the new session
     # need to make it so that the user can select a summary to read
     c['summaries'] = bill.documents.filter(doc_type="summary")
+    if 'summary' in request.GET and request.GET['summary']:
+        pass
     for summary in c['summaries']:
         if summary.doc_id:
             c['text'] = get_summary(summary)
@@ -146,10 +150,10 @@ def bill_overview(request, term, session, bill_number):
     except ObjectDoesNotExist:
         c['latest_action'] = None
     if c['latest_action']:
-        c['latest_action'] = c['latest_action'].type.get().full_description
+        c['latest_action'] = ActionType.objects.get(type=c['latest_action'].atype).full_description
     else:
-        c[
-        'latest_action'] = """<p>This bill is still awaiting its first reading. Check back later or track this bill to keep up to date.</p>"""
+        c['latest_action'] = """<p>This bill is still awaiting its first 
+        reading. Check back later or track this bill to keep up to date.</p>"""
 
     ###################################
     # Charts and User Actions
@@ -177,7 +181,7 @@ def bill_text(request, term, session, bill_number, version):
     """
     Display the bill text with comments and permalinks to sections.
     """
-    session = get_session(term, session)
+    session_name = get_session(term, session)
 
     c = {}
     c['no_throttle'] = True
@@ -189,13 +193,10 @@ def bill_text(request, term, session, bill_number, version):
         }
     }
     c['version'] = get_object_or_404(Version, bill__number=bill_number,
-                                     bill__session=session, name=version)
+                                     bill__session=session_name, name=version)
     c['title'] = "%s - %s" % (c['version'].bill.number, c['version'].name)
     version_url = c['version'].url.split('/')[-1]
-    # TODO this should just de the value of the TextNode contenttype id
-    c['commented_nodes'] = comments.get_model().objects.filter(
-            content_type=ContentType.objects.get(model="VersionText"))
-    c['text'] = get_bill_text(c['version'])
+    c['text'] = get_bill_text(term=term, session=session, version=c['version'])
     c['text'] = "{% load comments %}\n" + c['text']
     c['text'] = Template(c['text']).render(RequestContext(request, c))
 
