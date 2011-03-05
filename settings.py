@@ -104,9 +104,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'watchingaz.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -167,14 +165,22 @@ LOGGING = {
         },
     }
 }
+
 ACCOUNT_ACTIVATION_DAYS = 7
 #profile
 AUTH_PROFILE_MODULE = 'dashboard.Profile'
+
 # api keys
 YAHOO_MAPS_API_KEY = ""
 SUNLIGHT_API_KEY = ""
 VOTESMART_API_KEY = ""
 NIMSP_API_KEY = ""
+
+#spam 
+RECAPTCHA_PRIVATE_KEY = ""
+RECAPTCHA_PUBLIC_KEY = ""
+RECAPTCHA_USE_SSL = True
+AKISMET_API_KEY = ""
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.abspath(
                                             os.path.dirname(__file__)), 'data'))
