@@ -2,7 +2,7 @@ from watchingaz.bills.models import *
 from django.contrib import admin
 
 class BillAdmin(admin.ModelAdmin):
-    search_fields = ("number", "session", "title")
+    search_fields = ("number", "session__name", "title")
 
 admin.site.register(Bill, BillAdmin)
 
