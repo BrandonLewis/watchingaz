@@ -171,8 +171,8 @@ LOGGING = {
 
 ACCOUNT_ACTIVATION_DAYS = 7
 #profile
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
-                           'locksmith.hub.auth_backend.LocksmithBackend',)
+#AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
+#                           'locksmith.hub.auth_backend.LocksmithBackend',)
 AUTH_PROFILE_MODULE = 'dashboard.Profile'
 
 # locksmith settings
