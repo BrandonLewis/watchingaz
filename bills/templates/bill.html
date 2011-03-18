@@ -318,11 +318,20 @@
                                         </div>
                                         <ul>
                                             {% for item in sponsor.list %}
+					    {% if item.person %}
                                             <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;" about="{% url people.views.person_view item.person.leg_id %}">
                                                 <a href="{% url people.views.person_view item.person.leg_id %}">
                                                     <span property="full_name">{{ item.person.full_name }}</span>
                                                 </a>
                                             </li>
+					    {% else %}
+					    {# most of the sponsor names are reconciled now# }
+					    {# so this can go, the problem is that if we cannot reconcile a sponsor #}
+					    {# we save the scraped name #}
+					    <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;">
+                                                <span property="full_name">{{ item.scraped_name }}</span>
+                                            </li>
+					    {% endif %}
                                             {% endfor %}
                                         </ul>   
                                     </div>

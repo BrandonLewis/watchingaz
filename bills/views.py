@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import Context, RequestContext, loader, Template
 
 from watchingaz.bills.models import (Bill, ActionType, Version, VersionText, 
-                                     BillPageView)
+                                     BillPageView, Sponsor)
 from watchingaz.tools.forms import (AddTrackerShortForm, SearchBarForm, 
                                     QuestionForm)
 from watchingaz.bills.utils import get_bill_text
@@ -150,7 +150,8 @@ def bill_overview(request, term, session, bill_number):
             break
     else:
         c['text'] = ''
-    c['sponsors'] = bill.sponsors.all()
+    
+    c['sponsors'] = bill.sponsor_set.objects.all()
     c['chamber'] = {'upper': 'Senate', 'lower': 'House'}[bill.chamber]
     c['other_chamber'] = {'upper': 'House', 'lower': 'Senate'}[bill.chamber]
     try:

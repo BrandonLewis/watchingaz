@@ -294,7 +294,9 @@ class Sponsor(models.Model):
     type = models.CharField(max_length=2)
     scraped_name = models.CharField(max_length=50)
     def __unicode__(self):
-        return '%s %s' % (self.person.full_name, self.type)
+        # a Sponsor does not always have a person object attached
+        # return '%s %s' % (self.person.full_name, self.type)
+        return '%s %s' % (self.scraped_name, self.type)
 
 class Title(models.Model):
     "Alternate Bill Titles"
