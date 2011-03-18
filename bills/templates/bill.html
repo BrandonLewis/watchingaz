@@ -308,6 +308,7 @@
                         </div>
                         <div id="sponsors" class="yui3-u-3-5">
                             <div class="content">
+				{% if sponsors %}
                                 <div class="yui3-g" rel="{{azNS.sponsors}}">
                                     {% regroup sponsors by type as sponsor_list %}
                                     {% for sponsor in sponsor_list %}
@@ -327,6 +328,7 @@
                                     </div>
                                     {% endfor %}
                                 </div>
+				{% endif %}
                             </div>
                         </div>
                     
