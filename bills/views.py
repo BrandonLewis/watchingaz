@@ -150,7 +150,7 @@ def bill_overview(request, term, session, bill_number):
             break
     else:
         c['text'] = ''
-    c['sponsors'] = bill.sponsor_set.all()
+    c['sponsors'] = bill.sponsors.all()
     c['chamber'] = {'upper': 'Senate', 'lower': 'House'}[bill.chamber]
     c['other_chamber'] = {'upper': 'House', 'lower': 'Senate'}[bill.chamber]
     try:
