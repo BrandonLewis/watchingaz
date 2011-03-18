@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'locksmith.auth.middleware.APIKeyMiddleware',
+    #'locksmith.auth.middleware.APIKeyMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
@@ -133,8 +133,8 @@ INSTALLED_APPS = (
     'django.contrib.syndication',
     'django.contrib.comments',
     
-    'locksmith.hub',
-    'locksmith.auth',
+    #'locksmith.hub',
+    #'locksmith.auth',
     'registration',
     'south',
     'watchingaz.base',
