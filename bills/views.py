@@ -151,7 +151,7 @@ def bill_overview(request, term, session, bill_number):
     else:
         c['text'] = ''
     
-    c['sponsors'] = bill.sponsor_set.objects.all()
+    c['sponsors'] = Sponsor.objects.filter(bill=bill)
     c['chamber'] = {'upper': 'Senate', 'lower': 'House'}[bill.chamber]
     c['other_chamber'] = {'upper': 'House', 'lower': 'Senate'}[bill.chamber]
     try:
