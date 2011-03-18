@@ -128,7 +128,8 @@ def transform(doc, stylesheet=None):
     trans = etree.XSLT(xsl)
     page_name = doc.metadata['url'].split('/')[-1]
     folder = legislature_to_number(doc.metadata['bill']['session']).split('/')
-    doc = UnicodeDammit(doc.read(), isHTML=True).unicode
+    doc = doc.read().decode("ISO-8859-2", "xmlcharrefreplace").encode("UTF-8", "xmlcharrefreplace")
+    #doc = UnicodeDammit(doc.read(), isHTML=True).unicode
     elem = html.fromstring(doc)
     changed = trans(elem)
     stylesheet.close()

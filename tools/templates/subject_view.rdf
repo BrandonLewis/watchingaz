@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:ns="http://watchingaz.us/ns/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+    <rdf:Description rdf:about="{{ subject }}">
+        {% for sub in sa %}
+        <ns:summaries rdf:resource="http://watchingaz.us/ns/Summary/mtfJxlHq244"/>
+        {% endfor %}
+    </rdf:Description>
+</rdf:RDF>

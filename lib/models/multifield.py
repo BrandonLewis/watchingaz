@@ -1,5 +1,7 @@
 from django.db import models
+from django.template.defaultfilters import capfirst
 from watchingaz.lib.forms.extra_widgets import MultiSelectFormField
+from django.forms import MultipleChoiceField
 
 class MultiSelectField(models.Field):
     description = "A multiple select field that takes a list and stores the"\
@@ -23,7 +25,7 @@ class MultiSelectField(models.Field):
         if self.has_default():
             defaults['initial'] = self.get_default()
         defaults.update(kwargs)
-        return MultiSelectFormField(**defaults)
+        return MultipleChoiceField(**defaults) #MultiSelectFormField(**defaults)
 
     def get_db_prep_value(self, value, connection, prepared=True):
         if isinstance(value, basestring):
@@ -34,7 +36,12 @@ class MultiSelectField(models.Field):
     def to_python(self, value):
         if isinstance(value, list):
             return value
+        elif value == None:
+            return ''
         return value.split(",")
+        
+    def get_prep_value(self, value):
+        return self.to_python(value)
 
     def contribute_to_class(self, cls, name):
         super(MultiSelectField, self).contribute_to_class(cls, name)
@@ -43,6 +50,7 @@ class MultiSelectField(models.Field):
             setattr(cls, 'get_%s_display' % self.name, func)
             
     def value_to_string(self, obj):
+        print "value to string"
         value = self._get_val_from_obj(obj)
-        return self.get_db.prep_value(value)
+        return self.get_db_prep_value(value)
 

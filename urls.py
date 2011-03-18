@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # accounts and profiles
     (r'^accounts/', include('registration.backends.default.urls')),
     # tools and apis
+    (r'locksmith/', include('locksmith.hub.urls')),
+    (r'^ns/', include('watchingaz.tools.urls')),
     (r'^trackers/add/', 'watchingaz.tools.views.add_tracker'),
     (r'^search/', 'watchingaz.tools.views.search'),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),

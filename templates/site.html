@@ -14,6 +14,8 @@
         {% endblock additional_style %}
         <script type="text/javascript" src="{{ MEDIA_URL }}js/yui-min.js" charset="utf-8">
         </script>
+        {% block extrahead %}
+        {% endblock extrahead %}
     </head>
     <body id="doc" class="yui3-skin-sam">
         <div class="yui3-g">
@@ -96,7 +98,12 @@
                     <div class="yui3-u-1-5"><div class="content-box"></div></div>
                     <div class="yui3-u-1-5"><div class="content-box"></div></div>
                     <div class="yui3-u-1-5"><div class="content-box"></div></div>
-                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
+                    <div class="yui3-u-1-5">
+                        <div class="content-box">
+                            <p>Resources: </p>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="yui3-u-1">

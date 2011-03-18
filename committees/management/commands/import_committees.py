@@ -79,13 +79,16 @@ def import_committee(committee):
     committee.pop('subcommittee', None)
     committee['name'] = committee.pop('committee')
     sources = committee.pop('sources')
-    new_com,c = Committee.objects.get_or_create(**committee)
+    print committee
+    created_at = committee.pop('created_at')
+    updated_at = committee.pop('updated_at')
+    new_com,c = Committee.objects.get_or_create(leg_id=committee['leg_id'])
 
     new_com.name = committee['name']
     new_com.state = committee['state']
     new_com.chamber = committee['chamber']
-    new_com.created_at = committee['created_at']
-    new_com.updated_at = committee['updated_at']
+    new_com.created_at = created_at
+    new_com.updated_at = updated_at
     for source in sources:
         source = process_obj(source)
         new_source, sc = CommitteeSource.objects.get_or_create(committee=new_com,

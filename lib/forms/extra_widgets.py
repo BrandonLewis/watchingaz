@@ -6,7 +6,7 @@ MultiSelectFormField came from http://djangosnippets.org/snippets/1200/
 from django import forms
 
 class MultiSelectFormField(forms.MultipleChoiceField):
-    widget = forms.CheckboxSelectMultiple
+    widget = forms.SelectMultiple #CheckboxSelectMultiple
     
     def __init__(self, *args, **kwargs):
         self.max_choices = kwargs.pop('max_choices', 0)

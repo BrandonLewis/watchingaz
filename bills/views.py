@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext, loader, Template
+from django.template import Context, RequestContext, loader, Template
 
 from watchingaz.bills.models import (Bill, ActionType, Version, VersionText, 
                                      BillPageView)
@@ -52,11 +52,19 @@ def bill_index(request):
         t = loader.get_template('bills/_paged_items.json')
         response.write(t.render(RequestContext(request, context)))
         return response
-    c['upper_newest'] = Bill.objects.filter(chamber='upper'
+    c['upper_newest'] = Bill.objects.filter(chamber='upper',
+                                            session__name=settings.DEFAULT_SESSION
                                             ).order_by('-created_at')[:10]
-    c['lower_newest'] = Bill.objects.filter(chamber='lower'
+    c['lower_newest'] = Bill.objects.filter(chamber='lower',
+                                            session__name=settings.DEFAULT_SESSION
                                             ).order_by('-created_at')[:10]
-    # TODO action_list = Bill.objects.order_by()
+    c['upper_recent_action'] = Bill.objects.filter(chamber='upper',
+                                            session__name=settings.DEFAULT_SESSION
+                                             ).order_by('actions__date')[:10]
+    c['lower_recent_action'] = Bill.objects.filter(chamber='lower',
+                                            session__name=settings.DEFAULT_SESSION
+                                             ).order_by('actions__date')[:10]
+                                             
     if request.user.is_authenticated():
         profile = request.user.get_profile()
         try:
@@ -149,11 +157,7 @@ def bill_overview(request, term, session, bill_number):
         c['latest_action'] = bill.actions.latest()
     except ObjectDoesNotExist:
         c['latest_action'] = None
-    if c['latest_action']:
-        c['latest_action'] = ActionType.objects.get(type=c['latest_action'].atype).full_description
-    else:
-        c['latest_action'] = """<p>This bill is still awaiting its first 
-        reading. Check back later or track this bill to keep up to date.</p>"""
+    c['latest_action'] = _render_action_description(c['latest_action'], bill)
 
     ###################################
     # Charts and User Actions
@@ -218,3 +222,10 @@ def _get_session(term, session):
     except AttributeError:
         raise Http404('Invalid Legislative Session')
     return session
+    
+def _render_action_description(action, bill):
+    if not action:
+        return """<p>This bill is still awaiting its first 
+        reading. Check back later or track this bill to keep up to date.</p>"""
+    description = ActionType.objects.get(type=action.atype).full_description
+    return Template(description).render(Context({'action':action, 'bill':bill}))

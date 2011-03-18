@@ -50,7 +50,7 @@ class BillAction(models.Model):
     class Meta:
         get_latest_by = 'date'
     def __unicode__(self):
-        return "%s %s %s" % (self.bill.number, self.action, self.type)
+        return "%s %s %s" % (self.bill.number, self.action, self.atype)
 
 class Bill(models.Model):
     number = models.CharField(max_length=10)
@@ -137,6 +137,7 @@ class BillPageView(models.Model):
 def bill_status_handler(sender, **kwargs):
     if 'created' in kwargs and kwargs['created']:
         status = BillStatus(bill=kwargs['instance'])
+        status.update_status()
         status.save()
 post_save.connect(bill_status_handler, sender=Bill)
 class BillStatus(models.Model):

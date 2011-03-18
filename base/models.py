@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 class BaseSource(models.Model):
     url = models.URLField(verify_exists=False)
@@ -41,3 +43,4 @@ class SessionDetail(models.Model):
     end_date = models.DateTimeField(blank=True, null=True)
     full_name = models.CharField(max_length=200)
     metadata = models.ForeignKey(Metadata, related_name='session_details')
+    

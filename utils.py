@@ -1,4 +1,8 @@
 import re
+import os
+import logging
+import logging.handlers
+from django.conf import settings
 from django.contrib.humanize.templatetags.humanize import ordinal
 
 def legislature_to_number(leg):
@@ -19,3 +23,27 @@ def number_to_leg(term, session):
     term = ordinal(term)
     session, stype = ordinal(session[0]), session[1]
     return '%s-%s-%s' % (term, session, {'r':'regular', 's':'special'}[stype])
+    
+def get_logger(name, **kargs):
+    level = kargs.pop('log_level', None)
+    log_file = os.path.abspath(os.path.join(settings.LOG_DIR, name + '.txt'))
+    log_handler = logging.handlers.RotatingFileHandler(people_file,maxBytes=1024,
+                                                        backupCount=5 )
+    if level:
+        if level == 'INFO':
+            log_handler.setLevel(logging.INFO)
+        elif level == 'DEBUG':
+            log_handler.setLevel(logging.DEBUG)
+        elif level == 'WARN':
+            log_handler.setLevel(logging.WARN)
+        elif level == 'ERROR':
+            log_handler.setLevel(logging.ERROR)
+        else:
+            log_handler.setLevel(logging.CRITICAL)
+    elif settings.DEBUG:
+        log_handler.setLevel(logging.DEBUG)
+    else:
+        log_handler.setLevel(logging.WARN)
+    logger = logging.getLogger(name)
+    logger.addHandler(log_handler)
+    return logger

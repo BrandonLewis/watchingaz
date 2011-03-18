@@ -131,10 +131,10 @@
 {% endblock additional_style %}
         {% block content %}
         <div class="yui3-u-1">
-            <div class="content">
+            <div class="content" about="{{ bill.get_absolute_url|urlencode }}">
                 <div style="margin:0; padding:5px;text-align:center;">
                     <div class="inner">
-                        <h1>{{ bill.number}} - {{ bill.title }}</h1>
+                        <h1><span property="bill_number">{{ bill.number}}</span> - <span property="title">{{ bill.title }}</h1>
                     </div>
                 </div>
                 <div id="BillTabs">
@@ -149,31 +149,31 @@
                                 <div class="inner">
                                     <strong>Bill Summary: </strong>
                                 </div>
-                                <div style="text-align:center">
+                                <div style="text-align:center"  rel="{{ azNS.bill_status }}" resource="{{ azNS.bill_status }}/{{ bill.status.id }}">
                                     <ul class="bill-status">
                                         {% with bill.status.get_status as status %}
                                         {% with status.introduced.passed as passed %}
                                         <li class="{{ passed|default:'no-action' }}">
                                             <p>First Read</p>
-                                            <p>{{ status.introduced.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <p property="{{ azNS.first_read }}">{{ status.introduced.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% with status.primary.passed as passed %}
                                         <li class="{{ passed|default:'no-action' }}">
                                             <p>{{ chamber }} Passed</p>
-                                            <p>{{ status.primary.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <p property="{{ azNS.primary_passed }}">{{ status.primary.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% with status.other.passed as passed %}
                                         <li class="{{ passed|default:'no-action' }}">
                                             <p>{{ other_chamber }} Passed</p>
-                                            <p>{{ status.other.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <p property="{{ azNS.secondary_passed }}">{{ status.other.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% with status.governor.passed as passed %}
                                         <li class="{{ passed|default:'no-action' }}">
                                             <p>Governor Signed</p>
-                                            <p>{{ status.governor.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <p property="{{ azNS.governor_signed }}">{{ status.governor.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% if status.override %}
@@ -206,6 +206,11 @@
                                     </div>
                                     <div class="content">
                                         {{ latest_action|safe }}
+                                        <ul>
+                                        {% for action in bill.actions.all %}
+                                        <li>{{action}} - {{action.date}}</li>
+                                        {% endfor %}
+                                        </ul>
                                     </div>
                                 </div>
                             </div>  
@@ -224,9 +229,15 @@
                                         </tr>
                                         {% for version in bill.versions.all %}
                                         <tr>{% if version.doc_id %}
-                                            <td><p><a href="{{version.get_absolute_url}}">{{version.name}}</a></p></td>
+                                            <td rel="{{ azNS.Version }}" resource="{{ version.get_absolute_url}}">
+						<p>
+						    <a href="{{version.get_absolute_url}}" property="{{ azNS.title }}">{{version.name}}</a>
+						</p>
+					    </td>
                                             {% else %}
-                                            <td><p><a href="{{version.url}}">{{version.name}}</a>(external)</p></td>
+                                            <td rel="{{ azNS.Version }}" resource="{{ version.url}}">
+						<p><a href="{{version.url}}" property="{{ azNS.title }}">{{version.name}}</a>(external)</p>
+					    </td>
                                             {% endif %}
                                         </tr>
                                         {% endfor %}
@@ -237,10 +248,14 @@
                                             </td>
                                         </tr>
                                         {% for summary in summaries %}
-                                        <tr><td><a href="{{summary.url}}">{{summary.name}}</a></td></tr>
+                                        <tr rel="{{azNS.Summary}}" resource="{{summary.url}}">
+					    <td>
+						<a href="{{summary.url}}" rel="nofollow">{{summary.name}}</a>
+					    </td>
+					</tr>
                                         {% endfor %}
                                         {% endif %}
-                                        <tr>
+                                        <tr class="robots-nocontent">
                                             <td>
                                                 {% if is_tracking %}
                                                 <p>To change your tracking preferences click <a href="">here</a></p>
@@ -256,7 +271,7 @@
                                                 {% endif %}
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="robots-nocontent">
                                             <td>
                                                 <form method="post" action="/bills/questions/">
                                                     <label for="billquestion">Have a question about this bill? </label>
@@ -265,7 +280,7 @@
                                                 </form> 
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="robots-nocontent">
                                             <td>
                                                 <div id="billsupport"></div>
                                                 <script type="text/javascript">
@@ -293,17 +308,20 @@
                         </div>
                         <div id="sponsors" class="yui3-u-3-5">
                             <div class="content">
-                                <div class="inner" style="display:inline-block"><strong>Sponsors:</strong></div>
-                                <div class="yui3-g">
+                                <div class="yui3-g" rel="{{azNS.sponsors}}">
                                     {% regroup sponsors by type as sponsor_list %}
                                     {% for sponsor in sponsor_list %}
                                     <div class="yui3-u-1-2">
                                         <div class="inner" style="display:inline-block">
-                                        <span>{%if sponsor.grouper == "P"%}Primary Sponsors{%else%}Co-Sponsors{%endif%}</span>
+                                        <strong>{%if sponsor.grouper == "P"%}Primary Sponsors{%else%}Co-Sponsors{%endif%}</strong>
                                         </div>
                                         <ul>
                                             {% for item in sponsor.list %}
-                                            <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;"><a href="{{ item.get_absolute_url }}">{{ item.person.full_name }}</a></li>
+                                            <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;" about="{% url people.views.person_view item.person.leg_id %}">
+                                                <a href="{% url people.views.person_view item.person.leg_id %}">
+                                                    <span property="full_name">{{ item.person.full_name }}</span>
+                                                </a>
+                                            </li>
                                             {% endfor %}
                                         </ul>   
                                     </div>

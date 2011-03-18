@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib import comments
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
@@ -96,3 +97,39 @@ def add_tracker(request):
         return render_to_response('add_tracker.html', RequestContext(request, c))
     else:
         raise Http404("Sorry but this page does not exist ;)")
+
+def ontology(request):
+    return render_to_response('ontology.owl', Context({}))
+
+def bill_rdf(request, session, bill_number):
+    subject = Bill.objects.get(number=bill_number, session__name=session)
+    if not subject.type:
+        raise Http404("Resource %s/%s not found." % (ns, subject_id))
+        
+    response = HttpResponse(mimetype='application/xml-rdf')
+    
+    t = loader.get_template('subject_view.rdf')
+    c = Context({
+        'subject': subject,
+    })
+    response.write(t.render(c))
+    return response
+
+def subject_view(request, subject_class, subject_id):
+    classes = {'Person': 'people', 'Committee': 'committees'}
+    if not subject_class in classes:
+        raise Http404("404 not found")
+    content_type = ContentTypes.objects.get(app_label=classes[subject_class],
+                                            model=subject_class)
+    try:
+        subject = content_type.get_object_for_this_type(subject_id)
+    except ObjectDoesNotExist:
+        raise Http404("404 not found")
+    response = HttpResponse(mimetype='application/xml-rdf')
+    
+    t = loader.get_template('subject_view.rdf')
+    c = Context({
+        'subject': subject,
+    })
+    response.write(t.render(c))
+    return response

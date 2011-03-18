@@ -98,13 +98,15 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'locksmith.auth.middleware.APIKeyMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 ROOT_URLCONF = 'watchingaz.urls'
 
 TEMPLATE_DIRS = (
-    os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates'))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), 'templates')),
+    #'/home/fa7ll7en/svn/django-rdf/trunk/django-rdf/rdf/template',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -130,9 +132,10 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     'django.contrib.syndication',
     'django.contrib.comments',
-
-    'registration',
     
+    'locksmith.hub',
+    'locksmith.auth',
+    'registration',
     'south',
     'watchingaz.base',
     'watchingaz.bills',
@@ -168,8 +171,14 @@ LOGGING = {
 
 ACCOUNT_ACTIVATION_DAYS = 7
 #profile
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
+                           'locksmith.hub.auth_backend.LocksmithBackend',)
 AUTH_PROFILE_MODULE = 'dashboard.Profile'
 
+# locksmith settings
+LOCKSMITH_HUB_URL = ""
+LOCKSMITH_SIGNING_KEY = ""
+LOCKSMITH_API_NAME = ""
 # api keys
 YAHOO_MAPS_API_KEY = ""
 SUNLIGHT_API_KEY = ""

@@ -1,5 +1,6 @@
 data
 cache
+logs
 *.pyc
 *.DS_Store
 *~
@@ -8,3 +9,4 @@ errors/*
 *.pid
 *.swp
 .idea
+watchingaz.komodoproject

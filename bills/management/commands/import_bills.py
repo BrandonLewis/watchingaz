@@ -174,19 +174,24 @@ def process_bill(b):
         process_vote(vote, bill)
 
     for s in b['sponsors']:
-        # TODO redo this. I think that the name matching improvements on the
-        # openstates end have made this much easier
         if s['leg_id']:
             person = Person.objects.get(leg_id=s['leg_id'])
-            sponsor, created = Sponsor.objects.get_or_create(person=person,
+            try:
+                sponsor, created = Sponsor.objects.get_or_create(person=person,
                                                          bill=bill,
                                                          type=s['type'],
                                                          scraped_name=s['name'])
+            except Sponsor.MultipleObjectsReturned:
+                # TODO log this and notify me so i can manually update it
+                print person, bill, bill.session
         else:
             person = None
-            sponsor, created = Sponsor.objects.get_or_create(bill=bill,
+            try:
+                sponsor, created = Sponsor.objects.get_or_create(bill=bill,
                                                          type=s['type'],
                                                          scraped_name=s['name'])
+            except Sponsor.MultipleObjectsReturned:
+                print person, bill, bill.session
     
     bill.save()
     print "Saved Bill: " + b['bill_id']

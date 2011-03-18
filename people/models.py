@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField
+from watchingaz.base.models import BaseSource
 
 class Person(models.Model):
     party_types = (
@@ -56,3 +57,6 @@ class Role(models.Model):
     party = models.CharField(max_length=1, choices=party_types, null=True, blank=True)
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
+    
+class PersonSource(BaseSource):
+    person = models.ForeignKey(Person, related_name="sources")

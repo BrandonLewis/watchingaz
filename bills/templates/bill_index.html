@@ -184,6 +184,47 @@
                 </div>
             </div>
         </div>
+        <div class="yui3-u-1-2">
+            <div class="inner"><strong>Senate Bills most recently acted on:</strong>
+            </div>
+            <div class="inner-container">
+                {% for bill in upper_recent_action %}
+                    <div class="content">
+                        <h4>
+                            <a href="{{ bill.get_absolute_url|urlencode }}">{{ bill.number }}</a>
+                            - {{ bill.title }}</h4>
+
+                        <div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="content">
+                    <div style="vertical-align:middle;height:10px;text-align:right;">
+                        <a href="{% url bills.views.bills_by_chamber '50' '1r' 'senate' 'newest' %}">more</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-1-2">
+            <div class="inner"><strong>House Bills most recently acted on:</strong></div>
+            <div class="inner-container">
+                {% for bill in lower_recent_action %}
+                    <div class="content">
+                        <h4>
+                            <a href="{{ bill.get_absolute_url|urlencode }}">{{ bill.number }}</a>
+                            - {{ bill.title }}</h4>
+
+                        <div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="content">
+                    <div style="vertical-align:middle;height:10px;text-align:right;">
+                        <a href="{% url bills.views.bills_by_chamber '50' '1r' 'house' 'newest' %}">more</a></div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock content %}
 {% block endscript %}
