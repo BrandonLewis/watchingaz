@@ -11,15 +11,16 @@ from watchingaz.people.models import Person
 class Trackable(models.Model):
     "if a model/contenttype is in this table users can track changes to it"
     content_type = models.ForeignKey(ContentType, unique=True)
+    def __unicode__(self):
+        return self.content_type.__unicode__()
     
-
-# TODO probably use signals to ensure that trackers are marked as updated
 class Tracker(models.Model):
     """Tracker represents any object/content type """
     content_type = models.ForeignKey(ContentType)
     tracked_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'tracked_id')
     term = models.ForeignKey(Term)
+    last_updated = models.DateField(blank=True, null=True)
 
     def save(self, *args, **kargs):
         if not Trackable.objects.get(content_type=self.content_type):
@@ -27,8 +28,10 @@ class Tracker(models.Model):
         super(Tracker, self).save(*args, **kargs)
 
 class MyTracker(models.Model):
-    update_choices = (('d', 'Daily'), ('w', 'Weekly', ), ('m', 'Monthly'),
-                      ('o', 'on_action'))
+    # the reason for the update frequency being assigned per tracked item
+    # is that someone might want to track one bill that is a hot item and be
+    # notified daily while for other bills its not an urgent need
+    update_choices = (('d', 'Daily'), ('w', 'Weekly', ), ('m', 'Monthly'))
     user = models.ForeignKey(Profile, related_name='tracked_items', null=True,
                              blank=True)
     tracker = models.ForeignKey(Tracker, related_name='users_tracking')
@@ -56,26 +59,49 @@ class Answer(models.Model):
     user = models.ForeignKey(Profile, related_name="my_answers")
     text = models.TextField()
     
-class AggregateContributions(models.Model):
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.CharField(max_length=32)
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
-    name = models.CharField(max_length=200) #will need to change this to a company
-    organization_id = models.CharField(max_length=32)
-    direct_amount = models.DecimalField(max_digits=15, decimal_places=2)
-    direct_count = models.IntegerField(max_length=6)
-    employee_amount = models.DecimalField(max_digits=15, decimal_places=2)
-    employee_count = models.IntegerField(max_length=6)
-    total_amount = models.DecimalField(max_digits=15, decimal_places=2)
-    total_count = models.IntegerField(max_length=6)
-    
-class DataTopSectors(models.Model):
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.CharField(max_length=32)
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
-    sector = models.CharField(max_length=1)
-    
-class TopIndustryBySector(models.Model):
-    count = models.IntegerField(max_length=5)
-    amount = models.DecimalField(max_digits=15, decimal_places=2)
-    industry = models.CharField(max_length=3)
+#class TransparencyDataModel(models.Model):
+#    "this model will likely be split into several smaller models"
+#    cycle = models.IntegerField(max_length=5)
+#    transaction_namespace = models.CharField(max_length=22)
+#    transaction_id = models.CharField(max_length=32)
+#    transaction_type = models.CharField(max_length=16)
+#    filing_id = models.CharField(max_length=9)
+#    is_amendment = models.CharField(max_length=12)
+#    amount = models.CharField(max_length=11)
+#    date = models.CharField(max_length=10)
+#    
+#    contributor_name = models.CharField(max_length=255)
+#    contributor_ext_id = models.CharField(max_length=18)
+#    contributor_type = models.CharField(max_length=16)
+#    contributor_occupation = models.CharField(max_length=64)
+#    contributor_employer = models.CharField(max_length=64)
+#    contributor_gender = models.CharField(max_length=18)
+#    contributor_address = models.CharField(max_length=84)
+#    contributor_city = models.CharField(max_length=38)
+#    contributor_state = models.CharField(max_length=17)
+#    contributor_zipcode = models.CharField(max_length=19)
+#    contributor_category = models.CharField(max_length=20)
+#    
+#    organization_name = models.CharField(max_length=255)
+#    organization_ext_id = models.CharField(max_length=19)
+#    parent_organization_name = models.CharField(max_length=255)
+#    parent_organization_ext_id = models.CharField(max_length=26)
+#    
+#    recipient_name = models.CharField(max_length=96)
+#    recipient_ext_id = models.CharField(max_length=16)
+#    recipient_party = models.CharField(max_length=15)
+#    recipient_type = models.CharField(max_length=14)
+#    recipient_state = models.CharField(max_length=15)
+#    recipient_state_held = models.CharField(max_length=20)
+#    recipient_category = models.CharField(max_length=18)
+#    
+#    committee_name = models.CharField(max_length=255)
+#    committee_ext_id = models.CharField(max_length=16)
+#    committee_party = models.CharField(max_length=15)
+#    candidacy_status = models.CharField(max_length=16)
+#    district= models.CharField(max_length=8)
+#    district_held = models.CharField(max_length=13)
+#    seat = models.CharField(max_length=14)
+#    seat_held = models.CharField(max_length=9)
+#    seat_status = models.CharField(max_length=11)
+#    seat_result = models.CharField(max_length=11)

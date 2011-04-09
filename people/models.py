@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.localflavor.us.models import USStateField
-from watchingaz.base.models import BaseSource
+from watchingaz.base.models import BaseSource, Term, Session
 
 class Person(models.Model):
     party_types = (
@@ -37,6 +37,23 @@ class Person(models.Model):
     
     def __unicode__(self):
         return self.full_name
+    
+    def served(self):
+        """
+        Returns the start and end of a legislator's term of service. If she
+        through say the 49th into the 50th it would return '[[1-12-2009, None]] '.
+        if her term ended at 49th-1st-regular and started again in the 50th
+        it would be '[[1-12-2009, 4-10-2009], ['1-10-2011', None]]'
+        """
+        date_range = []
+        for role in self.roles.filter(type='member').order_by('term'):
+            #term = term.objects.get(name=role.term)
+            date_range += Session.objects.filter(term__name=role.term,
+                                        session_details__type='primary'
+                        ).values_list('name', 'session_details__start_date',
+                                      'session_details__end_date')
+            
+        return date_range
 
 class Role(models.Model):
     party_types = (

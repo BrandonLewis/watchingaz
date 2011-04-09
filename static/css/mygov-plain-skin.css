@@ -24,11 +24,10 @@ html {
 */
 #innerHeader{ 
     border-bottom:1px solid #111;
-    #background:rgb(250,250,250);
     background:rgba(250,250,250,.7);
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(200, 200, 200 0.8)), to(rgba(250,250,250,.7))); /* for webkit browsers */
     background: -moz-linear-gradient(100% 100% 90deg,  rgba(200, 200, 200 .8),  rgba(250,250,250,.7)); /* for firefox 3.6+ */
-    -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#C8C8C8,EndColorStr=#FAFAFA)"; /*IE8*/
+    /* -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#C8C8C8,EndColorStr=#FAFAFA)"; IE8*/
     -moz-box-shadow: 0 1px 3px rgba(0,0,0,0,0.5);
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     color: #ffffff;
@@ -38,31 +37,9 @@ html {
 /************************************************ 
  * header styles
  ***********************************************/
-#HeaderNav {
-    background:rgb(230, 230, 250);
-    background:rgba(230, 230, 250, 0.5);
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(250,250,250,.7)), to(rgba(230, 230, 250, 0.5))); /* for webkit browsers */
-    background: -moz-linear-gradient(100% 100% 90deg,  rgba(250,250,250,.7),  rgba(230, 230, 250, 0.5)); /* for firefox 3.6+ */
-    margin:0 20px;
-    padding: 5px;
-    height:25px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-}
-
 .login-bar{
     float:right;
     font-size:small;
-    letter-spacing:normal;
-    word-spacing:normal;
-}
-
-#mainnav{
     letter-spacing:normal;
     word-spacing:normal;
 }
@@ -81,9 +58,6 @@ html {
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     box-shadow:0 1px 3px rgba(0,0,0,0.5);
     text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-}
-.MainContent {
-    background-color:#BED4E2;
 }
 
 #doc > .yui3-g{
@@ -108,7 +82,7 @@ html {
     -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#fbfbfb,EndColorStr=#BFBFBF)"; /*IE8*/
 }
 
-.inner, .innerColumn {
+.inner {
     background:rgb(229,229,229);
     background:rgba(229,229,229,.7);
     background-image: -moz-linear-gradient(top, rgba(229, 229, 229, .8),  rgba(191,191,191,.7)); /*Firefox*/
@@ -116,7 +90,7 @@ html {
     -ms-filter: "progid:DXImageTransform.Microsoft.Gradient(StartColorStr=#fbfbfb,EndColorStr=#BFBFBF)"; /*IE8*/
     background-image: linear-gradient(top, #fbfbfb, #BFBFBF); /*Standard*/
     margin: 10px;
-    padding: 10px;
+    padding: 5px 10px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -133,11 +107,6 @@ html {
 
 .inner ul {
     margin-left:15px;
-}
-
-.innerColumn {
-    width:145px;
-    float:left;
 }
 
 /************************************************
@@ -163,7 +132,14 @@ html {
 /************************************************
  * Miscelaneous Global styles
  ***********************************************/
-
+.info {
+    color: black;
+    background-color: rgb(191,191,191);
+}
+.error {
+    color: black;
+    background-color: red;
+}
 .warning { color: #aa0000; }
 
 #cal1Cont {
@@ -266,9 +242,7 @@ html {
     margin:0 10px;
     padding:0;
 }
-.inner {
-    padding: 5px 10px;
-}
+
 .content {
     background: rgb(250, 250, 250);
     padding: 5px;

@@ -1,0 +1,1192 @@
+[
+    {
+        "pk": 80, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Water, Land Use and Rural Development", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000038", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 81, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Appropriations", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000039", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 82, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Agriculture and Water", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000040", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 83, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Employment and Regulatory Affairs", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000041", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 84, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Energy and Natural Resources", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000042", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 85, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Higher Education, Innovation and Reform", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000043", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 86, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Technology and Infrastructure", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000044", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 87, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Transportation", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000045", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 53, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Appropriations", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000001", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 54, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Finance", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000004", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 55, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Healthcare and Medical Liability Reform", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000006", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 56, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Judiciary", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000007", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 57, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Public Safety and Human Services", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000009", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 58, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Rules", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000011", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 59, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Veterans and Military Affairs", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000012", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 60, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Appropriations", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000014", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 61, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Appropriations", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000015", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 62, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Appropriations", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000016", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 63, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Banking and Insurance", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000017", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 64, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Commerce", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000018", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 65, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Education", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000019", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 66, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Environment", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000020", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 67, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Government", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000021", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 68, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Health and Human Services", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000022", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 69, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Judiciary", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000023", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 70, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Military Affairs and Public Safety", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000024", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 71, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Rules", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000027", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 72, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Ways and Means", 
+            "parent": null, 
+            "created_at": "2011-01-21 19:37:46", 
+            "short_name": "", 
+            "leg_id": "AZC000030", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "lower", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 73, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Banking and Insurance", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000031", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 74, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Border Security, Federalism and States Sovereignty", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000032", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 75, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Commerce and Energy", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000033", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 76, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Economic Development and Jobs Creation", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000034", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 77, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Education", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000035", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 78, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Government Reform", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000036", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 79, 
+        "model": "committees.committee", 
+        "fields": {
+            "name": "Natural Resources and Transportation", 
+            "parent": null, 
+            "created_at": "2011-01-21 20:09:55", 
+            "short_name": "", 
+            "leg_id": "AZC000037", 
+            "updated_at": "2011-03-01 01:04:25", 
+            "chamber": "upper", 
+            "state": "az", 
+            "page_views_count": 0, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 105, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:36", 
+            "committee": 53
+        }
+    }, 
+    {
+        "pk": 106, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=54&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:37", 
+            "committee": 53
+        }
+    }, 
+    {
+        "pk": 107, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:42", 
+            "committee": 54
+        }
+    }, 
+    {
+        "pk": 108, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=60&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:43", 
+            "committee": 54
+        }
+    }, 
+    {
+        "pk": 109, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:44", 
+            "committee": 55
+        }
+    }, 
+    {
+        "pk": 110, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=62&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:45", 
+            "committee": 55
+        }
+    }, 
+    {
+        "pk": 111, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:45", 
+            "committee": 56
+        }
+    }, 
+    {
+        "pk": 112, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=63&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:46", 
+            "committee": 56
+        }
+    }, 
+    {
+        "pk": 113, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:47", 
+            "committee": 57
+        }
+    }, 
+    {
+        "pk": 114, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=65&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:48", 
+            "committee": 57
+        }
+    }, 
+    {
+        "pk": 115, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:48", 
+            "committee": 58
+        }
+    }, 
+    {
+        "pk": 116, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=66&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:49", 
+            "committee": 58
+        }
+    }, 
+    {
+        "pk": 117, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:49", 
+            "committee": 59
+        }
+    }, 
+    {
+        "pk": 118, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=67&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:50", 
+            "committee": 59
+        }
+    }, 
+    {
+        "pk": 119, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:51", 
+            "committee": 60
+        }
+    }, 
+    {
+        "pk": 120, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=70&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:52", 
+            "committee": 60
+        }
+    }, 
+    {
+        "pk": 121, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:53", 
+            "committee": 61
+        }
+    }, 
+    {
+        "pk": 122, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=71&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:54", 
+            "committee": 61
+        }
+    }, 
+    {
+        "pk": 123, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:56", 
+            "committee": 62
+        }
+    }, 
+    {
+        "pk": 124, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=1&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:57", 
+            "committee": 62
+        }
+    }, 
+    {
+        "pk": 125, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:57", 
+            "committee": 63
+        }
+    }, 
+    {
+        "pk": 126, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=3&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:58", 
+            "committee": 63
+        }
+    }, 
+    {
+        "pk": 127, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:58", 
+            "committee": 64
+        }
+    }, 
+    {
+        "pk": 128, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=2&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:59", 
+            "committee": 64
+        }
+    }, 
+    {
+        "pk": 129, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:59", 
+            "committee": 65
+        }
+    }, 
+    {
+        "pk": 130, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=4&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:00", 
+            "committee": 65
+        }
+    }, 
+    {
+        "pk": 131, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:02", 
+            "committee": 66
+        }
+    }, 
+    {
+        "pk": 132, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=5&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:03", 
+            "committee": 66
+        }
+    }, 
+    {
+        "pk": 133, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:03", 
+            "committee": 67
+        }
+    }, 
+    {
+        "pk": 134, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=6&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:04", 
+            "committee": 67
+        }
+    }, 
+    {
+        "pk": 135, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:04", 
+            "committee": 68
+        }
+    }, 
+    {
+        "pk": 136, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=7&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:05", 
+            "committee": 68
+        }
+    }, 
+    {
+        "pk": 137, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:06", 
+            "committee": 69
+        }
+    }, 
+    {
+        "pk": 138, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=8&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:07", 
+            "committee": 69
+        }
+    }, 
+    {
+        "pk": 139, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:07", 
+            "committee": 70
+        }
+    }, 
+    {
+        "pk": 140, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=10&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:08", 
+            "committee": 70
+        }
+    }, 
+    {
+        "pk": 141, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:08", 
+            "committee": 71
+        }
+    }, 
+    {
+        "pk": 142, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=12&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:09", 
+            "committee": 71
+        }
+    }, 
+    {
+        "pk": 143, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:11", 
+            "committee": 72
+        }
+    }, 
+    {
+        "pk": 144, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=15&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:12", 
+            "committee": 72
+        }
+    }, 
+    {
+        "pk": 145, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:37", 
+            "committee": 73
+        }
+    }, 
+    {
+        "pk": 146, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=55&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:38", 
+            "committee": 73
+        }
+    }, 
+    {
+        "pk": 147, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:38", 
+            "committee": 74
+        }
+    }, 
+    {
+        "pk": 148, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=56&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:39", 
+            "committee": 74
+        }
+    }, 
+    {
+        "pk": 149, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:39", 
+            "committee": 75
+        }
+    }, 
+    {
+        "pk": 150, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=57&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:40", 
+            "committee": 75
+        }
+    }, 
+    {
+        "pk": 151, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:40", 
+            "committee": 76
+        }
+    }, 
+    {
+        "pk": 152, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=58&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:41", 
+            "committee": 76
+        }
+    }, 
+    {
+        "pk": 153, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:41", 
+            "committee": 77
+        }
+    }, 
+    {
+        "pk": 154, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=59&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:42", 
+            "committee": 77
+        }
+    }, 
+    {
+        "pk": 155, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:43", 
+            "committee": 78
+        }
+    }, 
+    {
+        "pk": 156, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=61&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:44", 
+            "committee": 78
+        }
+    }, 
+    {
+        "pk": 157, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:46", 
+            "committee": 79
+        }
+    }, 
+    {
+        "pk": 158, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=64&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:47", 
+            "committee": 79
+        }
+    }, 
+    {
+        "pk": 159, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:50", 
+            "committee": 80
+        }
+    }, 
+    {
+        "pk": 160, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=68&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:51", 
+            "committee": 80
+        }
+    }, 
+    {
+        "pk": 161, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:52", 
+            "committee": 81
+        }
+    }, 
+    {
+        "pk": 162, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=69&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:53", 
+            "committee": 81
+        }
+    }, 
+    {
+        "pk": 163, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:03:54", 
+            "committee": 82
+        }
+    }, 
+    {
+        "pk": 164, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=17&Session_ID=102", 
+            "retrieved": "2011-03-01 01:03:56", 
+            "committee": 82
+        }
+    }, 
+    {
+        "pk": 165, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:00", 
+            "committee": 83
+        }
+    }, 
+    {
+        "pk": 166, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=18&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:01", 
+            "committee": 83
+        }
+    }, 
+    {
+        "pk": 167, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:01", 
+            "committee": 84
+        }
+    }, 
+    {
+        "pk": 168, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=19&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:02", 
+            "committee": 84
+        }
+    }, 
+    {
+        "pk": 169, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:05", 
+            "committee": 85
+        }
+    }, 
+    {
+        "pk": 170, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=20&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:06", 
+            "committee": 85
+        }
+    }, 
+    {
+        "pk": 171, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:09", 
+            "committee": 86
+        }
+    }, 
+    {
+        "pk": 172, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=21&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:10", 
+            "committee": 86
+        }
+    }, 
+    {
+        "pk": 173, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/xml/committees.asp?session=102", 
+            "retrieved": "2011-03-01 01:04:10", 
+            "committee": 87
+        }
+    }, 
+    {
+        "pk": 174, 
+        "model": "committees.committeesource", 
+        "fields": {
+            "url": "http://www.azleg.gov/CommitteeInfo.asp?Committee_ID=13&Session_ID=102", 
+            "retrieved": "2011-03-01 01:04:11", 
+            "committee": 87
+        }
+    }
+]

@@ -5,6 +5,7 @@ from django.db.models.query import QuerySet
 from watchingaz.base.models import Session
 from watchingaz.bills.models import *
 from watchingaz.people.models import Person
+from watchingaz.tools.models import Tracker
 import os
 import glob
 import urllib
@@ -66,45 +67,45 @@ def process_vote(vote, bill):
         for rep in vote['yes_votes']:
             person = get_person_for_vote(rep, vote=vote)
             if person:
-                how_voted = YesVote(vote=v, person=person)
+                how_voted, c = YesVote.objects.get_or_create(vote=v, person=person)
                 how_voted.save()
 
         for rep in vote['no_votes']:
             person = get_person_for_vote(rep, vote=vote)
             if person:
-                how_voted = NoVote(vote=v, person=person)
+                how_voted, c = NoVote.objects.get_or_create(vote=v, person=person)
                 how_voted.save()
 
         for rep in vote['other_votes']:
             person = get_person_for_vote(rep, vote=vote)
             if person:
-                how_voted = OtherVote(vote=v, person=person)
+                how_voted, c = OtherVote.objects.get_or_create(vote=v, person=person)
                 how_voted.save()
 
         if '+nv' in vote:
             for rep in vote['+nv']:
                 person = get_person_for_vote(rep, vote=vote)
-                how_voted = NotVote(vote=v, person=person)
+                how_voted, c = NotVote.objects.get_or_create(vote=v, person=person)
                 how_voted.save()
 
         if '+ab' in vote:
             for rep in vote['+ab']:
                 person = get_person_for_vote(rep, vote=vote)
-                how_voted = AbsentVote(vote=v, person=person)
+                how_voted, c = AbsentVote.objects.get_or_create(vote=v, person=person)
                 how_voted.save()
 
         if '+ex' in vote:
             for rep in vote['+ex']:
                 person = get_person_for_vote(rep, vote=vote)
-                how_voted = AbsentVote(vote=v, person=person)
+                how_voted, c = AbsentVote.objects.get_or_create(vote=v, person=person)
                 how_voted.save()
         if '+p' in vote:
             for rep in vote['+p']:
                 person = get_person_for_vote(rep, vote=vote)
-                how_voted = PresentVote(vote=v, person=person)
+                how_voted, c = PresentVote.objects.get_or_create(vote=v, person=person)
                 how_voted.save()
         v.save()
-    return
+    return c
 
 def sleep_and_resource(func, *args, **kwargs):
     time = datetime.time.time()
@@ -114,6 +115,7 @@ def process_bill(b):
     """
     takes a json bill object and adds it to the databases
     """
+    updated = False
     session = Session.objects.get(name=b['session'])
     bill, created = Bill.objects.get_or_create(number=b['bill_id'],
                                                title=b['title'],
@@ -128,10 +130,12 @@ def process_bill(b):
     for title in b['alternate_titles']:
         t, c = Title.objects.get_or_create(text=title, bill=bill)
         if c:
+            updated = True
             t.save()
     for source in b['sources']:
         t,c = BillSource.objects.get_or_create(bill=bill, url=source['url'])
         if c:
+            updated = True
             t.retrieved=source['retrieved']
             t.save()
     for version in b['versions']:
@@ -144,6 +148,7 @@ def process_bill(b):
                 v.doc_id = version.get('document_id', None)
                 v.save()
         elif c:
+            updated = True
             v.save()
 
     for document in b['documents']:
@@ -158,42 +163,61 @@ def process_bill(b):
                 d.doc_id = document.get('document_id', '')
                 d.save()
         elif c:
+            updated = True
             d.save()
 
     for action in b['actions']:
-        a, created = BillAction.objects.get_or_create(
+        a, c = BillAction.objects.get_or_create(
                 action=action['action'],
                 actor=action['actor'],
                 date=parse(action['date']).strftime('%Y-%m-%d %H:%M:%S'),
                 bill=bill, atype=action['type'])
         # removed the ManyToMany relation on billaction but still will use this 
         # for common action descriptions
+        if c:
+            updated = True
+            # a.save() dont need to explictly call save cause get_or_create
+            # populates all a BillAction's values
         action_type, c = ActionType.objects.get_or_create(type=action['type'])
 
     for vote in b['votes']:
-        process_vote(vote, bill)
-
+        c = process_vote(vote, bill)
+        if c:
+            updated = True
     for s in b['sponsors']:
         if s['leg_id']:
             person = Person.objects.get(leg_id=s['leg_id'])
             try:
-                sponsor, created = Sponsor.objects.get_or_create(person=person,
+                sponsor, c = Sponsor.objects.get_or_create(person=person,
                                                          bill=bill,
                                                          type=s['type'],
                                                          scraped_name=s['name'])
+                if c:
+                    updated = True
             except Sponsor.MultipleObjectsReturned:
                 # TODO log this and notify me so i can manually update it
                 print person, bill, bill.session
         else:
             person = None
             try:
-                sponsor, created = Sponsor.objects.get_or_create(bill=bill,
+                sponsor, c = Sponsor.objects.get_or_create(bill=bill,
                                                          type=s['type'],
                                                          scraped_name=s['name'])
+                if c:
+                    updated = True
             except Sponsor.MultipleObjectsReturned:
                 print person, bill, bill.session
-    
     bill.save()
+    #TODO if created: update new bills tracker
+    if updated:
+        print "bill updated"
+        try:
+            tracker = Tracker.objects.get(content_type__name='bill',
+                                          tracked_id=bill.id)
+            tracker.updated = datetime.datetime.now()
+            tracker.save()
+        except ObjectDoesNotExist:
+            pass
     print "Saved Bill: " + b['bill_id']
 
 def import_bills(state, last_updated, cache_dir, data_dir):
@@ -243,7 +267,7 @@ class Command(BaseCommand):
                 help='import bills from the openstates project'),
     make_option('--cache_dir', action='store', dest='cache_dir',
                 default=settings.CACHE_DIR,
-                help='path to directory containing the data dumo'),
+                help='path to directory containing the data dump'),
     make_option('--data_dir', action='store', dest='data_dir',
                 default=settings.DATA_DIR,
                 help='path to directory containing the data dump'),

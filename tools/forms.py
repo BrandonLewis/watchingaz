@@ -6,7 +6,7 @@ TRACKER_CHOICES = (('d', 'Daily'), ('w', 'Weekly', ), ('m', 'Monthly'),
 SEARCH_OPTIONS = (('b', 'Bills'), ('l', 'People'))
 
 def get_session_details():
-    sessions = SessionDetail.objects.values_list('s_id', 'full_name')
+    sessions = SessionDetail.objects.values_list('name', 'full_name')
     if sessions:
         return tuple(sessions)
     else:
@@ -33,6 +33,8 @@ class SearchBarForm(forms.Form):
     search_options = forms.ChoiceField(choices=SEARCH_OPTIONS,
                                        widget=forms.RadioSelect,
                                        required=False)
+    session = forms.ChoiceField(choices=SESSIONS,
+                                required=False)
 class SearchForm(forms.Form):
     search_field = forms.CharField()
     search_options = forms.ChoiceField(choices=SEARCH_OPTIONS,

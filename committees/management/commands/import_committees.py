@@ -7,8 +7,8 @@ import urllib2
 import json
 from dateutil.parser import parse
 
-COMMITTEE_INDEX = 'http://anvilrock-test/api/v1/committees/'
-COMMITTEE_URL = 'http://anvilrock-test/api/v1/committees/%s/'
+COMMITTEE_INDEX = 'http://openstates.sunlightlabs.com/api/v1/committees/?state=az&apikey=%s'
+COMMITTEE_URL = 'http://openstates.sunlightlabs.com/api/v1/committees/%s/?apikey=%s'
 {'+session': 'session', '+az_committee_id': 'az_committee_id'}
 
 def process_obj(obj, **kwargs):
@@ -100,7 +100,7 @@ def import_committee(committee):
         return new_com
     print "saved committee: %s" % new_com.leg_id
 
-def import_committees(state, term, force_update, initial=True):
+def import_committees(state, term, force_update, initial=False):
     if initial:
         data_dir = os.path.join(settings.DATA_DIR, state.lower(), 'committees')
         paths = sorted(glob.glob(os.path.join(data_dir, '*')))
@@ -112,8 +112,14 @@ def import_committees(state, term, force_update, initial=True):
             page.close()
             import_committee(committee)
     else:
-        pass
-
+        committee_index = urllib2.urlopen(COMMITTEE_INDEX % settings.SUNLIGHT_API_KEY)
+        committees = json.load(committee_index)
+        committee_index.close()
+        for committee in committees:
+            comm_page = urllib2.urlopen(COMMITTEE_URL % (committee['id'], settings.SUNLIGHT_API_KEY))
+            comm = json.load(comm_page)
+            comm_page.close()
+            import_committee(comm)
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (

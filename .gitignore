@@ -1,6 +1,7 @@
 data
 cache
 logs
+static/js/yui3
 *.pyc
 *.DS_Store
 *~

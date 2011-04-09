@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
@@ -11,9 +11,13 @@ urlpatterns = patterns('',
     # tools and apis
     #(r'locksmith/', include('locksmith.hub.urls')),
     (r'^ns/', include('watchingaz.tools.urls')),
+    (r'^tools/vote/(for|against)/$', 'watchingaz.tools.views.vote'),
     (r'^trackers/add/', 'watchingaz.tools.views.add_tracker'),
     (r'^search/', 'watchingaz.tools.views.search'),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
+    
+    # other urls
+    (r'^developers/', 'watchingaz.tools.views.developers_index'),
     (r'^$', 'watchingaz.base.views.index'),
 )

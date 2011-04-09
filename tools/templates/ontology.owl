@@ -1,0 +1,1171 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY ns "http://watchingaz.us/ns/" >
+    <!ENTITY Role "http://watchingaz.us/ns/Role/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY Person "http://watchingaz.us/ns/Person/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="&ns;ontology.owl#"
+     xml:base="&ns;ontology.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:ns="http://watchingaz.us/ns/"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:Role="&ns;Role/"
+     xmlns:Person="&ns;Person/">
+    <owl:Ontology rdf:about="http://watchingaz.us/ns/"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://watchingaz.us/ns/action_types -->
+
+    <owl:ObjectProperty rdf:about="&ns;action_types">
+        <rdfs:domain rdf:resource="&ns;Action"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/actions -->
+
+    <owl:ObjectProperty rdf:about="&ns;actions">
+        <rdfs:range rdf:resource="&ns;Action"/>
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/alternate_titles -->
+
+    <owl:ObjectProperty rdf:about="&ns;alternate_titles">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:range rdf:resource="&ns;Title"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/amendments -->
+
+    <owl:ObjectProperty rdf:about="&ns;amendments">
+        <rdfs:range rdf:resource="&ns;Amendment"/>
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/bill_votes -->
+
+    <owl:ObjectProperty rdf:about="&ns;bill_votes">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:range rdf:resource="&ns;Vote"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/documents -->
+
+    <owl:ObjectProperty rdf:about="&ns;documents">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:range rdf:resource="&ns;Calendar"/>
+        <rdfs:range rdf:resource="&ns;Document"/>
+        <rdfs:range rdf:resource="&ns;Summary"/>
+        <rdfs:range rdf:resource="&ns;Video"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/members -->
+
+    <owl:ObjectProperty rdf:about="&ns;members">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/metadata -->
+
+    <owl:ObjectProperty rdf:about="&ns;metadata">
+        <rdfs:range rdf:resource="&ns;Metadata"/>
+        <rdfs:domain rdf:resource="&ns;State"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/roles -->
+
+    <owl:ObjectProperty rdf:about="&ns;roles">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&ns;Role"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/session_details -->
+
+    <owl:ObjectProperty rdf:about="&ns;session_details">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:domain rdf:resource="&ns;Session"/>
+        <rdfs:range rdf:resource="&ns;SessionDetail"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/sessions -->
+
+    <owl:ObjectProperty rdf:about="&ns;sessions">
+        <rdfs:range rdf:resource="&ns;Session"/>
+        <rdfs:domain rdf:resource="&ns;Term"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/sources -->
+
+    <owl:ObjectProperty rdf:about="&ns;sources">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&ns;Source"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/sponsors -->
+
+    <owl:ObjectProperty rdf:about="&ns;sponsors">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:range rdf:resource="&ns;Sponsor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/summaries -->
+
+    <owl:ObjectProperty rdf:about="&ns;summaries">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:range rdf:resource="&ns;Summary"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/terms -->
+
+    <owl:ObjectProperty rdf:about="&ns;terms">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&ns;Term"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/versions -->
+
+    <owl:ObjectProperty rdf:about="&ns;versions">
+        <rdfs:range rdf:resource="&ns;Amendment"/>
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/votes -->
+
+    <owl:ObjectProperty rdf:about="&ns;votes">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:range rdf:resource="&ns;Vote"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&ns;vote"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://watchingaz.us/ns/abbreviation -->
+
+    <owl:DatatypeProperty rdf:about="&ns;abbreviation">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:domain rdf:resource="&ns;State"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/absent_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;absent_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/action -->
+
+    <owl:DatatypeProperty rdf:about="&ns;action">
+        <rdfs:domain rdf:resource="&ns;Action"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/action_type -->
+
+    <owl:DatatypeProperty rdf:about="&ns;action_type">
+        <rdfs:domain rdf:resource="&ns;Action"/>
+        <rdfs:domain rdf:resource="&ns;Action_Type"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/active -->
+
+    <owl:DatatypeProperty rdf:about="&ns;active">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/actor -->
+
+    <owl:DatatypeProperty rdf:about="&ns;actor">
+        <rdfs:domain rdf:resource="&ns;Action"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/bill_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;bill_id">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Title"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/bill_type -->
+
+    <owl:DatatypeProperty rdf:about="&ns;bill_type">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/chamber -->
+
+    <owl:DatatypeProperty rdf:about="&ns;chamber">
+        <rdfs:domain rdf:resource="&ns;Action"/>
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/committee -->
+
+    <owl:DatatypeProperty rdf:about="&ns;committee">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/committee_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;committee_id">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/committee_type -->
+
+    <owl:DatatypeProperty rdf:about="&ns;committee_type">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/created_at -->
+
+    <owl:DatatypeProperty rdf:about="&ns;created_at">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/date -->
+
+    <owl:DatatypeProperty rdf:about="&ns;date">
+        <rdfs:domain rdf:resource="&ns;Action"/>
+        <rdfs:domain rdf:resource="&ns;Video"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/district -->
+
+    <owl:DatatypeProperty rdf:about="&ns;district">
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/document_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;document_id">
+        <rdfs:domain rdf:resource="&ns;Document"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/document_type -->
+
+    <owl:DatatypeProperty rdf:about="&ns;document_type">
+        <rdfs:domain rdf:resource="&ns;Document"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/email -->
+
+    <owl:DatatypeProperty rdf:about="&ns;email">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/end_date -->
+
+    <owl:DatatypeProperty rdf:about="&ns;end_date">
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:domain rdf:resource="&ns;SessionDetail"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/end_year -->
+
+    <owl:DatatypeProperty rdf:about="&ns;end_year">
+        <rdfs:domain rdf:resource="&ns;Term"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/excused_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;excused_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/first_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;first_name">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/full_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;full_name">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/last_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;last_name">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/latest_dump_date -->
+
+    <owl:DatatypeProperty rdf:about="&ns;latest_dump_date">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/latest_dump_url -->
+
+    <owl:DatatypeProperty rdf:about="&ns;latest_dump_url">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/leg_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;leg_id">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Member"/>
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:domain rdf:resource="&ns;Sponsor"/>
+        <rdfs:domain rdf:resource="&ns;vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/legislature_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;legislature_name">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/lower_chamber_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;lower_chamber_name">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/lower_chamber_term -->
+
+    <owl:DatatypeProperty rdf:about="&ns;lower_chamber_term">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/lower_chamber_title -->
+
+    <owl:DatatypeProperty rdf:about="&ns;lower_chamber_title">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/motion -->
+
+    <owl:DatatypeProperty rdf:about="&ns;motion">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;name">
+        <rdfs:domain rdf:resource="&ns;Member"/>
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:domain rdf:resource="&ns;Session"/>
+        <rdfs:domain rdf:resource="&ns;SessionDetail"/>
+        <rdfs:domain rdf:resource="&ns;Sponsor"/>
+        <rdfs:domain rdf:resource="&ns;State"/>
+        <rdfs:domain rdf:resource="&ns;Term"/>
+        <rdfs:domain rdf:resource="&ns;vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/no_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;no_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/not_voting_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;not_voting_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/office_address -->
+
+    <owl:DatatypeProperty rdf:about="&ns;office_address">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/office_phone -->
+
+    <owl:DatatypeProperty rdf:about="&ns;office_phone">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/other_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;other_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/parent_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;parent_id">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/party -->
+
+    <owl:DatatypeProperty rdf:about="&ns;party">
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/passed -->
+
+    <owl:DatatypeProperty rdf:about="&ns;passed">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/position -->
+
+    <owl:DatatypeProperty rdf:about="&ns;position">
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/present_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;present_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/retrieved -->
+
+    <owl:DatatypeProperty rdf:about="&ns;retrieved">
+        <rdfs:domain rdf:resource="&ns;Amendment"/>
+        <rdfs:domain rdf:resource="&ns;Source"/>
+        <rdfs:domain rdf:resource="&ns;Version"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/role -->
+
+    <owl:DatatypeProperty rdf:about="&ns;role">
+        <rdfs:domain rdf:resource="&ns;Member"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/role_type -->
+
+    <owl:DatatypeProperty rdf:about="&ns;role_type">
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/scraped_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;scraped_name">
+        <rdfs:domain rdf:resource="&ns;vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/session -->
+
+    <owl:DatatypeProperty rdf:about="&ns;session">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/session_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;session_id">
+        <rdfs:domain rdf:resource="&ns;SessionDetail"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/session_type -->
+
+    <owl:DatatypeProperty rdf:about="&ns;session_type">
+        <rdfs:domain rdf:resource="&ns;SessionDetail"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/start_date -->
+
+    <owl:DatatypeProperty rdf:about="&ns;start_date">
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:domain rdf:resource="&ns;SessionDetail"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/start_year -->
+
+    <owl:DatatypeProperty rdf:about="&ns;start_year">
+        <rdfs:domain rdf:resource="&ns;Term"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/state -->
+
+    <owl:DatatypeProperty rdf:about="&ns;state">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/subcommittee -->
+
+    <owl:DatatypeProperty rdf:about="&ns;subcommittee">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/suffix -->
+
+    <owl:DatatypeProperty rdf:about="&ns;suffix">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/term -->
+
+    <owl:DatatypeProperty rdf:about="&ns;term">
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Role"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/title -->
+
+    <owl:DatatypeProperty rdf:about="&ns;title">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Document"/>
+        <rdfs:domain rdf:resource="&ns;Title"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/transparencydata_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;transparencydata_id">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/updated_at -->
+
+    <owl:DatatypeProperty rdf:about="&ns;updated_at">
+        <rdfs:domain rdf:resource="&ns;Bill"/>
+        <rdfs:domain rdf:resource="&ns;Committee"/>
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/upper_chamber_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;upper_chamber_name">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/upper_chamber_term -->
+
+    <owl:DatatypeProperty rdf:about="&ns;upper_chamber_term">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/upper_chamber_title -->
+
+    <owl:DatatypeProperty rdf:about="&ns;upper_chamber_title">
+        <rdfs:domain rdf:resource="&ns;Metadata"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/url -->
+
+    <owl:DatatypeProperty rdf:about="&ns;url">
+        <rdfs:domain rdf:resource="&ns;Document"/>
+        <rdfs:domain rdf:resource="&ns;Source"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/vacant_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;vacant_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/verbose_name -->
+
+    <owl:DatatypeProperty rdf:about="&ns;verbose_name">
+        <rdfs:domain rdf:resource="&ns;SessionDetail"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/vote_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;vote_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/vote_type -->
+
+    <owl:DatatypeProperty rdf:about="&ns;vote_type">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/votesmart_id -->
+
+    <owl:DatatypeProperty rdf:about="&ns;votesmart_id">
+        <rdfs:domain rdf:resource="&ns;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://watchingaz.us/ns/yes_count -->
+
+    <owl:DatatypeProperty rdf:about="&ns;yes_count">
+        <rdfs:domain rdf:resource="&ns;Vote"/>
+        <rdfs:subPropertyOf rdf:resource="&ns;vote_count"/>
+        <rdfs:range rdf:resource="&xsd;integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://watchingaz.us/ns/Action -->
+
+    <owl:Class rdf:about="&ns;Action">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Action_Type -->
+
+    <owl:Class rdf:about="&ns;Action_Type">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Amendment -->
+
+    <owl:Class rdf:about="&ns;Amendment">
+        <rdfs:subClassOf rdf:resource="&ns;Document"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Bill -->
+
+    <owl:Class rdf:about="&ns;Bill">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Calendar -->
+
+    <owl:Class rdf:about="&ns;Calendar">
+        <rdfs:subClassOf rdf:resource="&ns;Document"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Committee -->
+
+    <owl:Class rdf:about="&ns;Committee">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Document -->
+
+    <owl:Class rdf:about="&ns;Document">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Legislator -->
+
+    <owl:Class rdf:about="&ns;Legislator">
+        <rdfs:subClassOf rdf:resource="&ns;Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Member -->
+
+    <owl:Class rdf:about="&ns;Member">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Metadata -->
+
+    <owl:Class rdf:about="&ns;Metadata">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Object -->
+
+    <owl:Class rdf:about="&ns;Object">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Person -->
+
+    <owl:Class rdf:about="&ns;Person">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Role -->
+
+    <owl:Class rdf:about="&ns;Role">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Session -->
+
+    <owl:Class rdf:about="&ns;Session">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/SessionDetail -->
+
+    <owl:Class rdf:about="&ns;SessionDetail">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Source -->
+
+    <owl:Class rdf:about="&ns;Source">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Sponsor -->
+
+    <owl:Class rdf:about="&ns;Sponsor">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/State -->
+
+    <owl:Class rdf:about="&ns;State">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Summary -->
+
+    <owl:Class rdf:about="&ns;Summary">
+        <rdfs:subClassOf rdf:resource="&ns;Document"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Term -->
+
+    <owl:Class rdf:about="&ns;Term">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Title -->
+
+    <owl:Class rdf:about="&ns;Title">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Version -->
+
+    <owl:Class rdf:about="&ns;Version">
+        <rdfs:subClassOf rdf:resource="&ns;Document"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Video -->
+
+    <owl:Class rdf:about="&ns;Video">
+        <rdfs:subClassOf rdf:resource="&ns;Document"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/Vote -->
+
+    <owl:Class rdf:about="&ns;Vote">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/absent_vote -->
+
+    <owl:Class rdf:about="&ns;absent_vote">
+        <rdfs:subClassOf rdf:resource="&ns;vote"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/excused_vote -->
+
+    <owl:Class rdf:about="&ns;excused_vote">
+        <rdfs:subClassOf rdf:resource="&ns;vote"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/no_vote -->
+
+    <owl:Class rdf:about="&ns;no_vote">
+        <rdfs:subClassOf rdf:resource="&ns;vote"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/not_voting_vote -->
+
+    <owl:Class rdf:about="&ns;not_voting_vote">
+        <rdfs:subClassOf rdf:resource="&ns;vote"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/other_vote -->
+
+    <owl:Class rdf:about="&ns;other_vote">
+        <rdfs:subClassOf rdf:resource="&ns;vote"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/present_vote -->
+
+    <owl:Class rdf:about="&ns;present_vote">
+        <rdfs:subClassOf rdf:resource="&ns;vote"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/vote -->
+
+    <owl:Class rdf:about="&ns;vote">
+        <rdfs:subClassOf rdf:resource="&ns;Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://watchingaz.us/ns/yes_vote -->
+
+    <owl:Class rdf:about="&ns;yes_vote">
+        <rdfs:subClassOf rdf:resource="&ns;vote"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.2.2.1782) http://owlapi.sourceforge.net -->
+

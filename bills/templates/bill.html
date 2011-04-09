@@ -4,7 +4,7 @@
 {% block additional_meta %}
 {% endblock additional_meta %}
 {% block additional_style %}
-<style>
+<style type="text/css">
     .yui3-scrollview {
         width:300px;
         border:1px solid #000;
@@ -127,14 +127,17 @@
     line-height:1em;
     margin-bottom:0;
 }
+
 </style>
 {% endblock additional_style %}
         {% block content %}
         <div class="yui3-u-1">
-            <div class="content" about="{{ bill.get_absolute_url|urlencode }}">
+            <div class="content" about="{{ bill.get_absolute_url|urlencode }}" typeof="azns:Bill">
+		<div property="dcterms:created" content="{{bill.created_at}}" />
+		<div property="dcterms:updated" content="{{bill.updated_at}}" />
                 <div style="margin:0; padding:5px;text-align:center;">
                     <div class="inner">
-                        <h1><span property="bill_number">{{ bill.number}}</span> - <span property="title">{{ bill.title }}</h1>
+                        <h1><span property="azns:bill_number">{{ bill.number}}</span> - <span property="azns:title">{{ bill.title }}</span></h1>
                     </div>
                 </div>
                 <div id="BillTabs">
@@ -149,31 +152,32 @@
                                 <div class="inner">
                                     <strong>Bill Summary: </strong>
                                 </div>
-                                <div style="text-align:center"  rel="{{ azNS.bill_status }}" resource="{{ azNS.bill_status }}/{{ bill.status.id }}">
+                                <div style="text-align:center"  rel="azns:bill_status" resource="azns:bill_status/{{ bill.status.id }}/">
                                     <ul class="bill-status">
                                         {% with bill.status.get_status as status %}
                                         {% with status.introduced.passed as passed %}
-                                        <li class="{{ passed|default:'no-action' }}">
+                                        <li class="{{ passed|default:'no-action' }}" about="azns:bill_status/{{ bill.status.id }}/">
                                             <p>First Read</p>
-                                            <p property="{{ azNS.first_read }}">{{ status.introduced.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <!-- should be property="azns:first_read" yes|no|na -->
+                                            <p property="azns:first_read">{{ status.introduced.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% with status.primary.passed as passed %}
-                                        <li class="{{ passed|default:'no-action' }}">
+                                        <li class="{{ passed|default:'no-action' }}" about="azns:bill_status/{{ bill.status.id }}/">
                                             <p>{{ chamber }} Passed</p>
-                                            <p property="{{ azNS.primary_passed }}">{{ status.primary.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <p property="azns:primary_passed">{{ status.primary.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% with status.other.passed as passed %}
-                                        <li class="{{ passed|default:'no-action' }}">
+                                        <li class="{{ passed|default:'no-action' }}" about="azns:bill_status/{{ bill.status.id }}/">
                                             <p>{{ other_chamber }} Passed</p>
-                                            <p property="{{ azNS.secondary_passed }}">{{ status.other.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <p property="azns:secondary_passed">{{ status.other.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% with status.governor.passed as passed %}
-                                        <li class="{{ passed|default:'no-action' }}">
+                                        <li class="{{ passed|default:'no-action' }}" about="azns:bill_status/{{ bill.status.id }}/">
                                             <p>Governor Signed</p>
-                                            <p property="{{ azNS.governor_signed }}">{{ status.governor.date|date:'m/j/Y'|default:' - ' }}</p>
+                                            <p property="azns:governor_signed">{{ status.governor.date|date:'m/j/Y'|default:' - ' }}</p>
                                         </li>
                                         {% endwith %}
                                         {% if status.override %}
@@ -188,7 +192,9 @@
                                 <div id="bill-summary">
                                     <div class="summary_text content">
                                         {% if summaries and summaries.0.text != '' %}
+					<p property="dcterms:abstract">
                                         {{summaries.0.text}}
+					</p>
                                         {% else %}
                                         <p>
                                             There is not currently a summary available. This is usually because there
@@ -206,11 +212,16 @@
                                     </div>
                                     <div class="content">
                                         {{ latest_action|safe }}
-                                        <ul>
+                                        <table>
                                         {% for action in bill.actions.all %}
-                                        <li>{{action}} - {{action.date}}</li>
+                                        <tr><td>{{action.date|date:'m/j/Y'}}</td><td>{{action.actor}}</td><td>{{action.action}}</td></tr>
                                         {% endfor %}
-                                        </ul>
+                                        </table>
+					<div id="mgGraph" style="height:400px;width:600px;"></div>
+					<script type="text/javascript">
+					    var acts = {{actions|safe}};
+					    YUI.namespace('mg').actions = acts;
+					</script>
                                     </div>
                                 </div>
                             </div>  
@@ -229,14 +240,14 @@
                                         </tr>
                                         {% for version in bill.versions.all %}
                                         <tr>{% if version.doc_id %}
-                                            <td rel="{{ azNS.Version }}" resource="{{ version.get_absolute_url}}">
-						<p>
-						    <a href="{{version.get_absolute_url}}" property="{{ azNS.title }}">{{version.name}}</a>
+                                            <td about="{{ bill.get_absolute_url|urlencode }}" rel="azns:versions" resource="{{ version.get_absolute_url}}">
+						<p about="{{version.get_absolute_url|urlencode}}" typeof="azns:Version"><!-- dcterms:isVersionOf -->
+						    <a href="{{version.get_absolute_url|urlencode}}" property="azns:title">{{version.name}}</a>
 						</p>
 					    </td>
                                             {% else %}
-                                            <td rel="{{ azNS.Version }}" resource="{{ version.url}}">
-						<p><a href="{{version.url}}" property="{{ azNS.title }}">{{version.name}}</a>(external)</p>
+                                            <td>
+						<p rel="dc:source"><a href="{{version.url}}">{{version.name}}</a>(external)</p>
 					    </td>
                                             {% endif %}
                                         </tr>
@@ -248,9 +259,9 @@
                                             </td>
                                         </tr>
                                         {% for summary in summaries %}
-                                        <tr rel="{{azNS.Summary}}" resource="{{summary.url}}">
-					    <td>
-						<a href="{{summary.url}}" rel="nofollow">{{summary.name}}</a>
+                                        <tr rel="azns:summaries" resource="{{summary.url}}">
+					    <td about="{{summary.url}}">
+						<a href="{{summary.url}}" rel="external related nofollow">{{summary.name}}</a>
 					    </td>
 					</tr>
                                         {% endfor %}
@@ -261,12 +272,14 @@
                                                 <p>To change your tracking preferences click <a href="">here</a></p>
                                                 {% else %}
                                                 <form method="post" action="/trackers/add/">
-                                                    <label for="track_this">Get email updates for this bill: </label>
-                                                    <input type="submit" value="Track this" id="track_this"/>
-                                                    {% csrf_token %}
-                                                    {{ tracker_form.object_id }}
-                                                    {{ tracker_form.content_type }}
-                                                    {{ tracker_form.where_to }}
+						    <div>
+							<label for="track_this">Get email updates for this bill: </label>
+							<input type="submit" value="Track this" id="track_this"/>
+							{% csrf_token %}
+							{{ tracker_form.object_id }}
+							{{ tracker_form.content_type }}
+							{{ tracker_form.where_to }}	
+						    </div>
                                                 </form>
                                                 {% endif %}
                                             </td>
@@ -274,9 +287,12 @@
                                         <tr class="robots-nocontent">
                                             <td>
                                                 <form method="post" action="/bills/questions/">
-                                                    <label for="billquestion">Have a question about this bill? </label>
-                                                    <input type="submit" value="Ask It" id="billquestion"/>
-                                                    <input type="hidden" value="{{bill.id}}" id="tracker_id"/> 
+						    <div>
+							{% csrf_token %}
+							<label for="billquestion">Have a question about this bill? </label>
+							<input type="submit" value="Ask It" id="billquestion"/>
+							<input type="hidden" value="{{bill.id}}" id="tracker_id"/>
+						    </div>
                                                 </form> 
                                             </td>
                                         </tr>
@@ -284,19 +300,25 @@
                                             <td>
                                                 <div id="billsupport"></div>
                                                 <script type="text/javascript">
-                                                    YUI.namespace('mg').support = {{bill_support|default:'[{"stance": "Users For", "count": 1}, {"stance": "Users Against", "count":1}]'|safe}};
+                                                    YUI.namespace('mg').support = {{support|default:'[{"stance": "Users For", "count": 1}, {"stance": "Users Against", "count":1}]'|safe}};
                                                 </script>
                                                 <div style="text-align:center" class="yui3-g">
                                                     <div class="yui3-u-1-2">
                                                     <form name="user-vote" action="/tools/vote/for/" method="POST">
-                                                        <input type="submit" value="Support" name="support" />
-                                                        <input type="hidden" value="{{bill.id}}" id="vote_for"/>
+							<div>
+							    {% csrf_token %}
+							    <input type="submit" value="Support" name="support" />
+							    <input type="hidden" value="{{bill.id}}" name="vote_on" />
+							</div>
                                                     </form>
                                                     </div>
                                                     <div class="yui3-u-1-2">
-                                                    <form name="user-vote" action="/tools/vote/against" method="POST">
-                                                        <input type="submit" value="Oppose" name="oppose" />
-                                                        <input type="hidden" value="{{bill.id}}" id="vote_against"/>
+                                                    <form name="user-vote" action="/tools/vote/against/" method="POST">
+							<div>
+							    {% csrf_token %}
+							    <input type="submit" value="Oppose" name="oppose" />
+							    <input type="hidden" value="{{bill.id}}" name="vote_on" />
+							</div>
                                                     </form>
                                                     </div>
                                                 </div>
@@ -309,7 +331,7 @@
                         <div id="sponsors" class="yui3-u-3-5">
                             <div class="content">
 				{% if sponsors %}
-                                <div class="yui3-g" rel="{{azNS.sponsors}}">
+                                <div class="yui3-g">
                                     {% regroup sponsors by type as sponsor_list %}
                                     {% for sponsor in sponsor_list %}
                                     <div class="yui3-u-1-2">
@@ -319,9 +341,9 @@
                                         <ul>
                                             {% for item in sponsor.list %}
 					    {% if item.person %}
-                                            <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;" about="{% url people.views.person_view item.person.leg_id %}">
+                                            <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;" rel="azns:sponsors" resource="{% url people.views.person_view item.person.leg_id %}">
                                                 <a href="{% url people.views.person_view item.person.leg_id %}">
-                                                    <span property="full_name">{{ item.person.full_name }}</span>
+                                                    <span property="azns:full_name">{{ item.person.full_name }}</span>
                                                 </a>
                                             </li>
 					    {% else %}
@@ -329,7 +351,7 @@
 					    {# so this can go, the problem is that if we cannot reconcile a sponsor #}
 					    {# we save the scraped name #}
 					    <li style="float:{% cycle 'left' 'right' %};margin:0px 5px;">
-                                                <span property="full_name">{{ item.scraped_name }}</span>
+                                                <span>{{ item.scraped_name }}</span>
                                             </li>
 					    {% endif %}
                                             {% endfor %}
@@ -347,7 +369,7 @@
         </div>
         {% endblock content %}
 {% block endscript %}
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
     YUI({
     fetchCSS: true,
     insertBefore: 'sitestyle'
@@ -367,7 +389,7 @@
             });
                 
             var billSupportValues = mg.support,
-                BillViews = new Y.Chart({dataProvider:billSupportValues,
+                UserSupport = new Y.Chart({dataProvider:billSupportValues,
                                         categoryKey:"stance", 
                                         seriesKeys:["count"], 
                                         type:"pie", 
@@ -381,8 +403,80 @@
                                                     }
                                                 }
                                             }
-                                        ],   
-                                       render:"#billsupport"});
+                                        ]});
+	    // only render the support chart if there are some users for or against
+	    if (Y.some(billSupportValues,
+		       function(val, ind, obj)
+		       {
+			    if (val['count'] > 0){
+				return true;
+			    } else{
+				return false;
+			    }
+			})
+		)
+	    {
+		UserSupport.render("#billsupport");
+	    }
+	    // action chart
+	    var chToolTip = {
+		styles: { 
+		    backgroundColor: "#333",
+		    color: "#eee",
+		    borderColor: "#fff",
+		    textAlign: "center"
+		},
+		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex)
+		{
+		    var msg = "<span style=\"text-decoration:underline\">" + valueItem.displayName + " for " + 
+		    categoryItem.axis.get("labelFunction").apply(this, [categoryItem.value, categoryItem.axis.get("labelFormat")]) + 
+		    "</span><br/><div style=\"margin-top:5px;font-weight:bold\">" + valueItem.axis.get("labelFunction").apply(this, [valueItem.value, {prefix:"$", decimalPlaces:2}]) + "</div>";
+		    return msg; 
+		}
+	    
+	    };
+	    var styleDef = {
+		    axes:{
+			values:{
+			    label:{
+				rotation:-45,
+				color:"#ff0000"
+			    }
+			},
+			date:{
+			    label:{
+				rotation:-45,
+				color: "#ff0000"
+			    }
+			}
+		    }/*,
+		    series:{
+			y: {
+			    marker: {
+				over: {
+				    fill: {
+					color: "#eee"
+				    },
+				    width: 12,
+				    height: 12
+				}
+			    }
+			}
+		    }*/
+		};
+	    var actionSeries = [
+		{type:"marker", yData: '', yKey:"value", yDisplayName:"Internet Sales", xDisplayName:"Date"},
+	    ];
+	    var ch = Y.Chart({dataProvider:mg.actions,
+		categoryKey:"date",
+		categoryType:"time",
+		//seriesKeys: ["y"],
+		
+		//type:"marker",
+		styles:styleDef
+		});
+	    ch.render("#mgGraph");
+	    mg.timeline = ch;
         });
 </script>
 

@@ -1,9 +1,18 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html version="HTML+RDFa 1.1" lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:xsd ="http://www.w3.org/2001/XMLSchema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:azns="http://watchingaz.us/ns/">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>{{ title }}</title>
-        <link rel="stylesheet" href="{{ MEDIA_URL }}css/reset-min.css" type="text/css"/>
+        <link rel="SHORTCUT ICON" href="{{ MEDIA_URL }}img/favicon.ico" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/reset-min.css" />
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/fonts-min.css" type="text/css"/>
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/grids-min.css" type="text/css"/>
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/base-min.css" type="text/css"/>
@@ -12,8 +21,7 @@
         {% endblock links %}
         {% block additional_style %}
         {% endblock additional_style %}
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/yui-min.js" charset="utf-8">
-        </script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/yui3/build/yui/yui-min.js" charset="utf-8"></script>
         {% block extrahead %}
         {% endblock extrahead %}
     </head>
@@ -37,7 +45,16 @@
                     {% block logo %} 
                     {% endblock logo %}  
                     {% block announce %}
-                    <div id="notify"></div>
+                    <div id="notify">
+                        {# generic fallback for messages most of these should be handled through js #}
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
                     {% endblock announce %}  
                 </div>
                 <div id="sitenavigation" class="yui3-menu yui3-menu-horizontal">
@@ -49,8 +66,10 @@
                             <li class="yui3-menuitem" style="float:right;clear:none;">
                                 <div id="searchbar">
                                     <form action="/search/" method="get">
-                                        <input type="text" id="search-input" name="search_field" />
-                                        <input type="submit" id="search-submit" value="search"/>
+                                        <div>
+                                            <input type="text" id="search-input" name="search_field" />
+                                            <input type="submit" id="search-submit" value="search"/>
+                                        </div>
                                         <div style="display:none">
                                             <table>
                                                 <tr>
@@ -94,14 +113,35 @@
         <div class="yui3-g" id="footer">
             <div class="yui3-u-1">
                 <div class="yui3-g">
-                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
-                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
-                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
-                    <div class="yui3-u-1-5"><div class="content-box"></div></div>
+                    <div class="yui3-u-1-5">
+                        <div class="content-box">
+                            <p>Bills:</p>
+                        </div>
+                    </div>
+                    <div class="yui3-u-1-5">
+                        <div class="content-box">
+                            <p>People:</p>
+                        </div>
+                    </div>
+                    <div class="yui3-u-1-5">
+                        <div class="content-box">
+                            <p>Committees:</p>
+                        </div>
+                    </div>
+                    <div class="yui3-u-1-5">
+                        <div class="content-box">
+                            <p>Something Else:</p>
+                        </div>
+                    </div>
                     <div class="yui3-u-1-5">
                         <div class="content-box">
                             <p>Resources: </p>
-                            
+                            <ul>
+                                <li><a href="/developers/">For Developers</a></li>
+                                <li><a href="http://azleg.gov/" rel="external dc:source">Arizona State Legislature</a></li>
+                                <li><a href="http://openstates.sunlightlabs.com/" rel="external">The Openstates Project</a></li>
+                                <li><a href="http://www.transparencydata.com/" rel="external">TransparencyData</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -109,7 +149,7 @@
             <div class="yui3-u-1">
                 <div class="content">
                     <p>
-                        &copy; 2010 &lt;Anvil Rock Road&gt;
+                        2010 Anvil Rock Road 
                     </p>
                     - <a href="">About</a>
                     - <a href="">Terms of Service</a>
@@ -121,7 +161,7 @@
         {% endblock %}
         <script type="text/javascript" src="{{ MEDIA_URL }}js/mygov-2010-12-30.js" charset="utf-8">
         </script>
-        <script type="text/javascript" charset="utf-8">
+        <script type="text/javascript">
             YUI({insertBefore: "sitestyle"}).use("node-menunav", function(Y) {
                     var menu = Y.one("#sitenavigation");
                     menu.plug(Y.Plugin.NodeMenuNav);

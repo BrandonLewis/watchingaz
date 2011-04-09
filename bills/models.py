@@ -45,7 +45,7 @@ class BillAction(models.Model):
     bill = models.ForeignKey('Bill', related_name="actions")
     actor = models.TextField()
     date = models.DateTimeField()
-    action = models.CharField(max_length=255)
+    action = models.TextField()
     atype = MultiSelectField(max_length=200, choices=ACTION_CHOICES)
     class Meta:
         get_latest_by = 'date'
@@ -97,9 +97,9 @@ class Bill(models.Model):
     def get_user_support(self):
         """Returns a list of two dicts for the user support chart
         bill.get_user_support()--> [
-                                        {"position": "'for'",
+                                        {"stance": "for",
                                          "count": 9, },
-                                        {"position":"'against'",
+                                        {"stance":"against",
                                          "count":10000}
                                       ]
         """
@@ -108,11 +108,12 @@ class Bill(models.Model):
         for_bill = 0
         against_bill = 0
         for vote in votes:
-            if vote == False:
+            if vote.vote == False:
                 against_bill += 1
-            elif vote == True:
+            elif vote.vote == True:
                 for_bill += 1
-        return [{"position": "'for'", "count": for_bill, },{"position":"'against'", "count":against_bill}]
+        return [{"stance": "for", "count": for_bill },
+                {"stance":"against", "count":against_bill}]
     def update_user_votes(self):
         votes = self.user_votes.all(bill=self)
         for_bill = 0
