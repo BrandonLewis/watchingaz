@@ -129,6 +129,7 @@
 }
 
 </style>
+<script src="http://static.simile.mit.edu/timeline/api-2.3.0/timeline-api.js?bundle=true" type="text/javascript"></script>
 {% endblock additional_style %}
         {% block content %}
         <div class="yui3-u-1">
@@ -213,14 +214,42 @@
                                     <div class="content">
                                         {{ latest_action|safe }}
                                         <table>
-                                        {% for action in bill.actions.all %}
+                                        {% for action in actions %}
                                         <tr><td>{{action.date|date:'m/j/Y'}}</td><td>{{action.actor}}</td><td>{{action.action}}</td></tr>
                                         {% endfor %}
                                         </table>
-					<div id="mgGraph" style="height:400px;width:600px;"></div>
+					<div id="mgGraph" style="height:400px;width:100%;"></div>
 					<script type="text/javascript">
-					    var acts = {{actions|safe}};
-					    YUI.namespace('mg').actions = acts;
+					    YUI().use('node', 'oop', function(Y){
+						var start_date, end_date;
+						var actions = { 'events': {{graph_actions|safe}} },
+						    mkEvent = function(val, key, obj){
+							
+						    },
+						    mkTime = function(val, key, obj){
+							val['start'] = new Date(val['start']);
+							val['icon'] = '{{ MEDIA_URL }}img/dark-red-circle.png';
+						    };
+						Y.each(actions['events'], mkTime);
+						for (var i=0; i<actions['events'].length;i++){
+						    if (i==0){
+							start_date=actions['events'][i]['start'];
+							end_date=actions['events'][i]['start'];
+						    }
+						    if (actions['events'][i]['start'] < start_date){
+							start_date = actions['events'][i]['start'];
+						    }
+						    if (actions['events'][i]['start'] > end_date){
+							end_date = actions['events'][i]['start'];
+						    }
+						    // artificial offset to space out the events
+						    offset = (i==0)? 3600000 : i*3600000
+						    actions['events'][i]['start'] = new Date(actions['events'][i]['start'].getTime() + offset);
+						}
+						actions['start_date'] = start_date;
+						actions['end_date'] = end_date;
+						YUI.namespace('mg').actions = actions;
+					    });
 					</script>
                                     </div>
                                 </div>
@@ -370,6 +399,9 @@
         {% endblock content %}
 {% block endscript %}
 <script type="text/javascript">
+	    
+</script>
+<script type="text/javascript">
     YUI({
     fetchCSS: true,
     insertBefore: 'sitestyle'
@@ -405,6 +437,7 @@
                                             }
                                         ]});
 	    // only render the support chart if there are some users for or against
+	    //TODO add event listener to render chart when support is measurable
 	    if (Y.some(billSupportValues,
 		       function(val, ind, obj)
 		       {
@@ -418,65 +451,60 @@
 	    {
 		UserSupport.render("#billsupport");
 	    }
-	    // action chart
-	    var chToolTip = {
-		styles: { 
-		    backgroundColor: "#333",
-		    color: "#eee",
-		    borderColor: "#fff",
-		    textAlign: "center"
-		},
-		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex)
-		{
-		    var msg = "<span style=\"text-decoration:underline\">" + valueItem.displayName + " for " + 
-		    categoryItem.axis.get("labelFunction").apply(this, [categoryItem.value, categoryItem.axis.get("labelFormat")]) + 
-		    "</span><br/><div style=\"margin-top:5px;font-weight:bold\">" + valueItem.axis.get("labelFunction").apply(this, [valueItem.value, {prefix:"$", decimalPlaces:2}]) + "</div>";
-		    return msg; 
-		}
-	    
-	    };
-	    var styleDef = {
-		    axes:{
-			values:{
-			    label:{
-				rotation:-45,
-				color:"#ff0000"
-			    }
-			},
-			date:{
-			    label:{
-				rotation:-45,
-				color: "#ff0000"
-			    }
-			}
-		    }/*,
-		    series:{
-			y: {
-			    marker: {
-				over: {
-				    fill: {
-					color: "#eee"
-				    },
-				    width: 12,
-				    height: 12
-				}
-			    }
-			}
-		    }*/
-		};
-	    var actionSeries = [
-		{type:"marker", yData: '', yKey:"value", yDisplayName:"Internet Sales", xDisplayName:"Date"},
-	    ];
-	    var ch = Y.Chart({dataProvider:mg.actions,
-		categoryKey:"date",
-		categoryType:"time",
-		//seriesKeys: ["y"],
+	    var tl;
+	    function onLoad() {
+		var tl_el = document.getElementById("mgGraph"),
+		    actions = YUI.namespace('mg').actions;
+		var eventSource1 = new Timeline.DefaultEventSource();
 		
-		//type:"marker",
-		styles:styleDef
-		});
-	    ch.render("#mgGraph");
-	    mg.timeline = ch;
+		var theme1 = Timeline.ClassicTheme.create();
+		// theme1.autoWidth = true; // Set the Timeline's "width" automatically.
+					 // Set autoWidth on the Timeline's first band's theme,
+					 // will affect all bands.
+		
+		theme1.timeline_start = new Date(actions['start_date'].getTime() - 86400000); //actions['start_date'];
+		theme1.timeline_stop  = new Date(actions['end_date'].getTime() + 86400000); //actions['end_date'];
+		
+		var bandInfos = [
+		    Timeline.createBandInfo({
+			width:          "70%",
+			intervalUnit:   Timeline.DateTime.DAY, 
+			intervalPixels: 100,
+			date: actions['start_date'],
+			theme:          theme1,
+			eventSource:    eventSource1
+		    }),
+		    Timeline.createBandInfo({
+			width:          "30%", 
+			intervalUnit:   Timeline.DateTime.MONTH, 
+			intervalPixels: 200,
+			theme:          theme1
+		    })
+		];
+		bandInfos[1].syncWith = 0;
+		bandInfos[1].highlight = true;
+								
+		// create the Timeline
+		tl = Timeline.create(tl_el, bandInfos, Timeline.HORIZONTAL);
+		
+		var url = '/media'; // The base url for image, icon and background image
+			       // references in the data
+		eventSource1.loadJSON(actions, url); // The data was stored into the 
+							   // timeline_data variable.
+		tl.layout(); // display the Timeline
+	    }
+	    
+	    var resizeTimerID = null;
+	    function onResize() {
+		if (resizeTimerID == null) {
+		    resizeTimerID = window.setTimeout(function() {
+			resizeTimerID = null;
+			tl.layout();
+		    }, 500);
+		}
+	    }
+	    Y.on('load', onLoad);
+	    Y.on('resize', onResize);
         });
 </script>
 

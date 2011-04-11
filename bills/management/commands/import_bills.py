@@ -165,7 +165,7 @@ def process_bill(b):
         elif c:
             updated = True
             d.save()
-
+    action_count = 0
     for action in b['actions']:
         a, c = BillAction.objects.get_or_create(
                 action=action['action'],
@@ -176,8 +176,13 @@ def process_bill(b):
         # for common action descriptions
         if c:
             updated = True
-            # a.save() dont need to explictly call save cause get_or_create
-            # populates all a BillAction's values
+            a.order = action_count
+            a.save()
+        else:
+            if a.order != action_count:
+                a.order = action_count
+                a.save()
+        action_count += 1
         action_type, c = ActionType.objects.get_or_create(type=action['type'])
 
     for vote in b['votes']:

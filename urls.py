@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 from django.contrib import admin
 admin.autodiscover()
 
@@ -19,5 +20,6 @@ urlpatterns = patterns('',
     
     # other urls
     (r'^developers/', 'watchingaz.tools.views.developers_index'),
+    (r'^%s/' % settings.YAHOO_VERIFY, 'watchingaz.base.views.blank'),
     (r'^$', 'watchingaz.base.views.index'),
 )

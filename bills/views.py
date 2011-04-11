@@ -163,35 +163,16 @@ def bill_overview(request, term, session, bill_number):
     ###################################
     # Charts and User Actions
     ###################################
-    actions = bill.actions.all()
-    bydate = {}
+    actions = bill.actions.all().order_by('order')
+    simi = []
     for act in actions:
-        d = act.date.strftime('%Y %m %d')
-        if d in bydate:
-            bydate[d]['actions'].append({"action":act.action, "actor":act.actor})
-        else:
-            bydate[d] = {"actions" :[ {"action":act.action, "actor":act.actor} ]}
-    
-    withkey = []    
-    for key in bydate.keys():
-        action = {"date": key}
-        num = 1
-        for x in bydate[key]['actions']:
-            action['action%d' % num] = num
-            num += 1
-        withkey.append(action)
-    #max_actions = 0
-    #for action in withkey:
-    #    length = len(action['actions'])
-    #    if length > max_actions:
-    #        max_actions = length
-    #    if length > 1:
-    #        for i in range(length):
-    #            action['actions'][i]['value'] = i
-    #    else:
-    #        action['actions'][0]['value'] = 1
-            
-    c['actions'] = json.dumps(withkey)
+        action = {}
+        action['start'] = act.date.strftime('%Y %m %d')
+        action['title'] = act.action
+        action['description'] = act.action
+        simi.append(action)
+    c['actions'] = actions
+    c['graph_actions'] = json.dumps(simi)
     c['bill_graph'] = json.dumps(bill.get_bill_stats())
     c['support'] = json.dumps(bill.get_user_support())
     c['tracker_form'] = AddTrackerShortForm(

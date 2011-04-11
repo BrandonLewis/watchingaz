@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
@@ -18,3 +19,6 @@ def index(request):
     c['week_events'] = Event.objects.filter(when__range=(start, end))
     c['bill_events'] = c['week_events'].filter(details__iregex=r'[s|h][b|c|r|j][r|m]?\d{4}')
     return render_to_response('index.html', RequestContext(request, c))
+    
+def blank(request):
+    return HttpResponse()

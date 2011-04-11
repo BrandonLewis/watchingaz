@@ -47,6 +47,7 @@ class BillAction(models.Model):
     date = models.DateTimeField()
     action = models.TextField()
     atype = MultiSelectField(max_length=200, choices=ACTION_CHOICES)
+    order = models.IntegerField(default=0)
     class Meta:
         get_latest_by = 'date'
     def __unicode__(self):
