@@ -20,5 +20,5 @@ def index(request):
     c['bill_events'] = c['week_events'].filter(details__iregex=r'[s|h][b|c|r|j][r|m]?\d{4}')
     return render_to_response('index.html', RequestContext(request, c))
     
-def blank(request):
+def blank(request, *args, **kargs):
     return HttpResponse()
