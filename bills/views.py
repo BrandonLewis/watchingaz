@@ -208,21 +208,21 @@ def bill_text(request, term, session, bill_number, version):
         }
     }
     c['version'] = get_object_or_404(Version, bill__number=bill_number,
-                                     bill__session=session_name, name=version)
+                                     bill__session__name=session_name, name=version.replace('-', ' '))
     c['title'] = "%s - %s" % (c['version'].bill.number, c['version'].name)
     version_url = c['version'].url.split('/')[-1]
     c['text'] = get_bill_text(term=term, session=session, version=c['version'])
     c['text'] = "{% load comments %}\n" + c['text']
     c['text'] = Template(c['text']).render(RequestContext(request, c))
 
-    return render_to_response('bills/bill_text.html',
+    return render_to_response('bill_text.html',
                               RequestContext(request, c))
 
 def get_summary(summary):
     return ''
 
 def get_session(term, session):
-    return _get_session(term, sesison)
+    return _get_session(term, session)
 
 def _get_session(term, session):
     """wrapper around number_to_session(term, session)
