@@ -213,11 +213,6 @@
                                     </div>
                                     <div class="content">
                                         {{ latest_action|safe }}
-                                        <table>
-                                        {% for action in actions %}
-                                        <tr><td>{{action.date|date:'m/j/Y'}}</td><td>{{action.actor}}</td><td>{{action.action}}</td></tr>
-                                        {% endfor %}
-                                        </table>
 					<div id="mgGraph" style="height:400px;width:100%;"></div>
 					<script type="text/javascript">
 					    YUI().use('node', 'oop', function(Y){
@@ -251,6 +246,13 @@
 						YUI.namespace('mg').actions = actions;
 					    });
 					</script>
+					<noscript>
+					    <table>
+					    {% for action in actions %}
+					    <tr><td>{{action.date|date:'m/j/Y'}}</td><td>{{action.actor}}</td><td>{{action.action}}</td></tr>
+					    {% endfor %}
+					    </table>
+					</noscript>
                                     </div>
                                 </div>
                             </div>  
@@ -333,7 +335,7 @@
                                                 </script>
                                                 <div style="text-align:center" class="yui3-g">
                                                     <div class="yui3-u-1-2">
-                                                    <form name="user-vote" action="/tools/vote/for/" method="POST">
+                                                    <form name="user-vote" action="/tools/vote/for/" method="post">
 							<div>
 							    {% csrf_token %}
 							    <input type="submit" value="Support" name="support" />
@@ -342,7 +344,7 @@
                                                     </form>
                                                     </div>
                                                     <div class="yui3-u-1-2">
-                                                    <form name="user-vote" action="/tools/vote/against/" method="POST">
+                                                    <form name="user-vote" action="/tools/vote/against/" method="post">
 							<div>
 							    {% csrf_token %}
 							    <input type="submit" value="Oppose" name="oppose" />
